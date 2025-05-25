@@ -23,7 +23,9 @@ const Hero = () => {
 
             {/* CTA Button */}
             <a 
-              href="#join" 
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeDgu9Xg07SzVRLhM9SOD1LgXB8Fa4-98H1Ljk7w5S5rFFMxA/viewform?usp=header" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center bg-transparent text-white border-2 border-white lg:text-[#3B3D87] lg:border-[#3B3D87] px-6 py-2 
                 font-medium text-base hover:bg-white hover:text-[#3B3D87] lg:hover:bg-[#3B3D87] lg:hover:text-white transition-colors duration-300"
             >

@@ -125,7 +125,9 @@ interface JoinButtonProps {
 
 const JoinButton = ({ mobile }: JoinButtonProps) => (
   <a 
-    href="#join" 
+    href="https://docs.google.com/forms/d/e/1FAIpQLSeDgu9Xg07SzVRLhM9SOD1LgXB8Fa4-98H1Ljk7w5S5rFFMxA/viewform?usp=header" 
+    target="_blank"
+    rel="noopener noreferrer"
     className={`
       bg-white text-[#3B3D87] px-3 py-1.5 font-medium flex items-center
       hover:bg-gray-100 transition-colors tracking-wide border border-white text-xs

@@ -93,7 +93,7 @@ const ContactUs = () => {
           </div>
           
           <div className="flex space-x-6 mb-8">
-            <SocialIcon icon={<FaInstagram />} href="#" />
+            <SocialIcon icon={<FaInstagram />} href="https://www.instagram.com/oakademy.in/" />
             <SocialIcon icon={<FaFacebookF />} href="#" />
             <SocialIcon icon={<FaTwitter />} href="#" />
             <SocialIcon icon={<FaLinkedinIn />} href="https://www.linkedin.com/company/oakademylearning" />
