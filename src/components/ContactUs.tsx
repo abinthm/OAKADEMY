@@ -96,7 +96,7 @@ const ContactUs = () => {
             <SocialIcon icon={<FaInstagram />} href="#" />
             <SocialIcon icon={<FaFacebookF />} href="#" />
             <SocialIcon icon={<FaTwitter />} href="#" />
-            <SocialIcon icon={<FaLinkedinIn />} href="#" />
+            <SocialIcon icon={<FaLinkedinIn />} href="https://www.linkedin.com/company/oakademylearning" />
             <SocialIcon icon={<FaTiktok />} href="#" />
           </div>
         </div>
