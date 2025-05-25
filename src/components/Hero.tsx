@@ -3,7 +3,7 @@ import heroImage from '../assets/3.png';
 
 const Hero = () => {
   return (
-    <section className="bg-[#F5F0F0] relative overflow-hidden h-[calc(100vh-4rem)]">
+    <section className="bg-[#F5F0F0] relative overflow-hidden h-screen">
       <div className="container mx-auto h-full">
         <div className="flex flex-col lg:flex-row items-center relative h-full">
           {/* Left Side - Content */}
