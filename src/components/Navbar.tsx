@@ -34,13 +34,13 @@ const Navbar = ({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) => {
         ${isVisible ? 'translate-y-0' : '-translate-y-full'}
       `}
     >
-      <div className="container mx-auto px-4 py-1 flex items-center justify-between max-w-5xl">
+      <div className="container mx-auto px-4 py-3 md:py-1 flex items-center justify-between max-w-5xl">
         {/* Logo */}
         <Link to="/" className="flex items-center -my-2">
           <img 
             src={frame1} 
             alt="Dear Asian Youth Logo" 
-            className="h-14 md:h-16 lg:h-20 w-auto"
+            className="h-24 md:h-16 lg:h-20 w-auto"
           />
         </Link>
 
@@ -54,11 +54,11 @@ const Navbar = ({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) => {
 
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-white"
+          className="md:hidden text-white p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle navigation menu"
         >
-          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
@@ -68,12 +68,12 @@ const Navbar = ({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) => {
           ${mobileMenuOpen ? 'block' : 'hidden'} 
           md:hidden bg-[#3B3D87] absolute w-full 
           transition-all duration-300 ease-in-out overflow-hidden 
-          ${mobileMenuOpen ? 'max-h-[300px] opacity-100 py-3' : 'max-h-0 opacity-0'}
+          ${mobileMenuOpen ? 'max-h-[300px] opacity-100 py-4' : 'max-h-0 opacity-0'}
         `}
         role="navigation"
         aria-label="Mobile navigation"
       >
-        <div className="container mx-auto px-4 flex flex-col space-y-3 max-w-5xl">
+        <div className="container mx-auto px-4 flex flex-col space-y-4 max-w-5xl">
           <NavLink to="/about" mobile>ABOUT US</NavLink>
           <NavLink href="https://oakademy-blogs.vercel.app/" target="_blank" rel="noopener noreferrer" mobile>VOICE OF THE OAK</NavLink>
           <NavLink href="#contact" mobile>CONTACT US</NavLink>
@@ -95,8 +95,8 @@ interface NavLinkProps {
 
 const NavLink = ({ href, to, children, mobile, target, rel }: NavLinkProps) => {
   const className = `
-    text-white font-medium tracking-wide hover:text-gray-200 transition-colors text-xs
-    ${mobile ? 'text-sm py-2 border-b border-white/15' : ''}
+    text-white font-medium tracking-wide hover:text-gray-200 transition-colors
+    ${mobile ? 'text-lg py-2 border-b border-white/15' : 'text-xs'}
   `;
 
   if (to) {
@@ -130,8 +130,8 @@ const JoinButton = ({ mobile }: JoinButtonProps) => (
     rel="noopener noreferrer"
     className={`
       bg-white text-[#3B3D87] px-3 py-1.5 font-medium flex items-center
-      hover:bg-gray-100 transition-colors tracking-wide border border-white text-xs
-      ${mobile ? 'text-sm w-full justify-center py-2' : 'rounded'}
+      hover:bg-gray-100 transition-colors tracking-wide border border-white
+      ${mobile ? 'text-lg w-full justify-center py-3' : 'text-xs rounded'}
     `}
   >
     JOIN US <span className="ml-1">→</span>
