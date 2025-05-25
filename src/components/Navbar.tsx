@@ -6,17 +6,14 @@ import frame1 from '../assets/Frame 1.svg';
 interface NavbarProps {
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
-  isInHero?: boolean;
 }
 
-const Navbar = ({ mobileMenuOpen, setMobileMenuOpen, isInHero = false }: NavbarProps) => {
+const Navbar = ({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
 
   useEffect(() => {
-    if (isInHero || window.innerWidth < 768) return; // Don't handle scroll for hero section or mobile
-
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
       setIsVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
@@ -28,13 +25,11 @@ const Navbar = ({ mobileMenuOpen, setMobileMenuOpen, isInHero = false }: NavbarP
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [prevScrollPos, isInHero]);
-
-  const positionClass = isInHero || window.innerWidth < 768 ? 'relative' : 'sticky';
+  }, [prevScrollPos]);
 
   return (
     <nav 
-      className={`${positionClass} top-0 z-50 w-full transition-all duration-300 transform
+      className={`sticky top-0 z-50 w-full transition-all duration-300 transform
         ${isScrolled ? 'bg-[#3B3D87] shadow-sm' : 'bg-[#3B3D87]'}
         ${isVisible ? 'translate-y-0' : '-translate-y-full'}
       `}

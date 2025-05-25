@@ -3,9 +3,9 @@ import heroImage from '../assets/3.png';
 
 const Hero = () => {
   return (
-    <section className="bg-[#F5F0F0] relative overflow-hidden h-screen">
+    <section className="bg-[#F5F0F0] relative overflow-hidden h-[calc(100vh-4rem)]">
       <div className="container mx-auto h-full">
-        <div className="flex flex-col lg:flex-row items-center relative h-full">
+        <div className="flex flex-col lg:flex-row items-end relative h-full pb-12 lg:pb-16">
           {/* Left Side - Content */}
           <div className="w-full lg:w-1/2 px-6 lg:px-12 py-8 relative z-10">
             {/* Heading */}
