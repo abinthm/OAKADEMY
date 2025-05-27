@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import frame1 from '../assets/Frame 1.svg';
+import frame1 from '../assets/Frame 2.svg';
 import { FaInstagram, FaFacebookF, FaTwitter, FaLinkedinIn, FaTiktok } from 'react-icons/fa';
 
 const ContactUs = () => {

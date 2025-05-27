@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import frame1 from '../assets/Frame 1.svg';
+import frame1 from '../assets/Frame 2.svg';
 
 interface NavbarProps {
   mobileMenuOpen: boolean;
@@ -47,7 +47,7 @@ const Navbar = ({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
           <NavLink to="/about">ABOUT US</NavLink>
-          <NavLink href="https://oakademy-blogs.vercel.app/" target="_blank" rel="noopener noreferrer">VOICE OF THE OAK</NavLink>
+          <NavLink href="/voice-of-oak" target="_blank" rel="noopener noreferrer">VOICE OF THE OAK</NavLink>
           <NavLink href="#contact">CONTACT US</NavLink>
           <JoinButton />
         </div>
