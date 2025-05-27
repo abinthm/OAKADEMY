@@ -101,8 +101,8 @@ interface ImpactCardProps {
 
 const ImpactCard = ({ title, subtitle, source, citation, url, urls }: ImpactCardProps) => (
   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-    <h3 className="font-['Poppins'] font-bold text-2xl text-[#3B3D87] mb-2">{title}</h3>
-    <p className="font-['Poppins'] font-normal text-black mb-4">{subtitle}</p>
+    <h3 className="font-['Poppins'] font-normal text-2xl text-[#3B3D87] mb-2">{title}</h3>
+    <p className="font-normal text-black mb-4">{subtitle}</p>
     <div className="text-sm text-gray-500">
       <p className="mb-1">{source}</p>
       <p className="mb-2">{citation}</p>
