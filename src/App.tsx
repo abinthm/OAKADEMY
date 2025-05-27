@@ -48,21 +48,21 @@ const AppRoutes = () => {
   // }, []);
 
   return (
-    <div className="min-h-screen">
+      <div className="min-h-screen">
       <Routes>
         <Route path="/coming-soon" element={<ComingSoon />} />
         <Route path="/" element={
           <>
-            <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
-            <main className={`transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-30' : 'opacity-100'}`}>
+        <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+        <main className={`transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-30' : 'opacity-100'}`}>
               <Home />
-            </main>
+        </main>
           </>
         } />
         <Route path="/about" element={
           <>
             <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
-            <main className={`transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-30' : 'opacity-100'}`}>
+        <main className={`transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-30' : 'opacity-100'}`}>
               <About />
             </main>
           </>
@@ -71,19 +71,19 @@ const AppRoutes = () => {
           <Route index element={<HomePage />} />
           <Route path="login" element={
             user ? <Navigate to="/voice-of-oak" replace /> : <LoginPage />
-          } />
+            } />
           <Route path="register" element={
             user ? <Navigate to="/voice-of-oak" replace /> : <RegisterPage />
-          } />
+            } />
           <Route path="post/:id" element={<ViewBlogPage />} />
-          
-          {/* Protected Routes */}
+            
+            {/* Protected Routes */}
           <Route path="write" element={<ProtectedRoute><WriteBlogPage /></ProtectedRoute>} />
           <Route path="edit/:id" element={<ProtectedRoute><WriteBlogPage /></ProtectedRoute>} />
           <Route path="profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
           <Route path="pending-posts" element={<ProtectedRoute><PendingPostsPage /></ProtectedRoute>} />
-          
-          {/* Admin Routes */}
+            
+            {/* Admin Routes */}
           <Route path="admin" element={
             <AdminRoute>
               <AdminDashboard />
@@ -95,9 +95,9 @@ const AppRoutes = () => {
             </AdminRoute>
           } />
         </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </div>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+      </div>
   );
 };
 

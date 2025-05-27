@@ -49,8 +49,8 @@ const ListItem = ({ title, description }: ListItemProps) => (
   <li className="flex items-start">
     <span className="text-primary-700 font-bold mr-2 mt-1.5">•</span>
     <div>
-      <h3 className="text-primary-700 font-medium text-xl mb-1">{title}</h3>
-      <p className="text-primary-600">{description}</p>
+      <h3 className="font-bold text-xl text-[#3B3D87] mb-1">{title}</h3>
+      <p className="font-normal text-[#3B3D87]">{description}</p>
     </div>
   </li>
 );

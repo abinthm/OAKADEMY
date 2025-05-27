@@ -98,10 +98,11 @@ const WhereWeWork = () => {
     <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="font-['Poppins'] font-extrabold text-4xl md:text-5xl lg:text-6xl mb-6 text-[#3B3D87] text-center">
-          Global Digital Divide
+        Our Footprint Across the Divide
+
         </h2>
         <p className="text-gray-600 text-center mb-16 max-w-3xl mx-auto">
-          Exploring the technology access gap across different regions and its impact on rural communities.
+        Regions We Serve and the Local Realities Shaping Our Mission
         </p>
 
         <div className="flex flex-col lg:flex-row items-start gap-8">

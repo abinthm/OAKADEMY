@@ -20,13 +20,13 @@ const Hero = () => {
           </div>
 
           {/* Left Side - Content */}
-          <div className="w-full lg:w-1/2 px-4 lg:px-8 flex flex-col justify-start lg:justify-center h-full lg:h-auto relative z-20 pt-20">
+          <div className="w-full lg:w-1/2 px-4 lg:px-8 flex flex-col justify-start lg:justify-center h-full lg:h-auto relative z-20 pt-20 lg:pt-8">
             {/* Heading */}
             <h1 className="font-['Poppins'] font-extrabold break-words text-[4rem] sm:text-[4.2rem] md:text-7xl lg:text-8xl leading-[1.05] -mt-6 mb-2 sm:mb-8 text-white lg:text-[#3B3D87]">
               Decoding<br />
               <span className="block mt-2">Inclusivity</span>
             </h1>
-            <p><br /><br /></p>
+            <p className="block lg:hidden"><br /><br /></p>
 
 
             {/* Description */}
