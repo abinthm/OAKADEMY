@@ -22,17 +22,19 @@ const Hero = () => {
           {/* Left Side - Content */}
           <div className="w-full lg:w-1/2 px-4 lg:px-8 flex flex-col justify-start lg:justify-center h-full lg:h-auto relative z-20 pt-20">
             {/* Heading */}
-            <h1 className="font-['Poppins'] font-extrabold break-words text-[3.6rem] sm:text-[2.75rem] md:text-7xl lg:text-8xl leading-[1.05] -mt-6 mb-2 sm:mb-8 text-white lg:text-[#3B3D87]">
+            <h1 className="font-['Poppins'] font-extrabold break-words text-[4.3rem] sm:text-[4.2rem] md:text-7xl lg:text-8xl leading-[1.05] -mt-6 mb-2 sm:mb-8 text-white lg:text-[#3B3D87]">
               Decoding<br />
               <span className="block mt-2">Inclusivity</span>
             </h1>
+            <p><br /><br /></p>
+
 
             {/* Description */}
-            <p className="text-white lg:text-[#3B3D87] lg:text-opacity-80 text-xs sm:text-sm md:text-base mb-4 max-w-xs sm:max-w-md md:max-w-2xl break-words text-justify pr-2">
+            <p className="text-white lg:text-[#3B3D87] lg:text-opacity-80 text-l sm:text-sm md:text-base mb-4 max-w-sm sm:max-w-lg md:max-w-2xl break-words text-justify pr-0">
               Bridging the digital divide by bringing AI education to marginalized communities - empowering rural youth with the knowledge, tools, and confidence to become creators of technology, not just consumers, and ensuring that the future of AI includes voices from every corner of society.
             </p>
 
-            <p className="text-white lg:text-[#3B3D87] lg:text-opacity-80 text-xs sm:text-sm md:text-base mb-4 max-w-xs sm:max-w-md md:max-w-2xl break-words text-justify pr-2">
+            <p className="text-white lg:text-[#3B3D87] lg:text-opacity-80 text-l sm:text-sm md:text-base mb-4 max-w-sm sm:max-w-lg md:max-w-2xl break-words text-justify pr-0">
               If you believe in rewriting the future with purpose and ensuring no voice is left behind in the age of AI - your journey starts here.
             </p>
 
