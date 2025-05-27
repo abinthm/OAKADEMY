@@ -19,7 +19,9 @@ const AboutHero = () => {
                 Our goal is to empower rural youth to become creators of technology, not just consumers. We believe true innovation emerges when diverse voices, especially those shaped by struggle and resilience, are given the tools and confidence to lead.
                 <br /><br />  
 By blending inclusion, sustainability, and community-driven innovation, Oakademy is reimagining who shapes the future of AI. From small towns and villages, young minds are learning to solve real problems using AI -ensuring every voice has a place in building tomorrow.
+<br /><br />  
                 </p>
+
 
               </div>
             </div>
