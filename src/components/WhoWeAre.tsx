@@ -50,7 +50,7 @@ const ListItem = ({ title, description }: ListItemProps) => (
     <span className="text-primary-700 font-bold mr-2 mt-1.5">•</span>
     <div>
       <h3 className="font-bold text-xl text-[#3B3D87] mb-1">{title}</h3>
-      <p className="font-normal text-[#3B3D87]">{description}</p>
+      <p className="font-normal text-black">{description}</p>
     </div>
   </li>
 );

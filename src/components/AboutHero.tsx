@@ -7,19 +7,20 @@ const AboutHero = () => {
       <div className="container mx-auto h-full">
         <div className="flex flex-col lg:flex-row items-center relative h-full">
           {/* Left Side - Content */}
-          <div className="w-full lg:w-1/2 px-6 lg:px-12 py-16 md:py-24 relative z-10">
+          <div className="w-full lg:w-1/2 px-6 lg:px-12 relative z-10">
             <div className="max-w-3xl">
               <h1 className="font-['Poppins'] font-extrabold text-5xl md:text-6xl lg:text-7xl mb-8 text-white lg:text-[#3B3D87]">
                 Our Story
               </h1>
               <div className="space-y-6 text-white lg:text-gray-700 text-lg md:text-xl">
-                <p>
-                Oakademy is a social innovation initiative dedicated to redefining AI education by making it accessible and relevant to rural youth. We recognize the current barriers that limit AI learning to urban centers and elite institutions. Our approach is rooted in inclusivity, sustainability, and real-world application - ensuring that young people from small towns and villages have the knowledge and tools to become creators and problem-solvers in their own communities.
+                <p className="text-justify">
+                Oakademy was born from the belief that technology should include everyone. In a world where Artificial Intelligence often feels distant and inaccessible to rural communities, we recognized an urgent need - not just to teach AI, but to bring it closer to those who’ve long been left behind.
+<br /><br />
+We started with a simple yet powerful goal: to empower rural youth with the knowledge, tools, and confidence to become creators of technology, not just consumers. Because we believe innovation thrives when it includes diverse perspectives - especially those rooted in lived experiences of struggle, resilience, and hope.
+<br /><br />
+By blending inclusion, sustainability, and community-driven innovation, Oakademy is reimagining who gets to shape the future of AI. We’re building a movement where young minds from villages and small towns are not only learning about AI but using it to solve real problems around them - and in doing so, ensuring the future of technology is shaped by every voice, from every corner of society.
                 </p>
-                <p>
-                  
-Our commitment is to foster an AI ecosystem that is environmentally responsible and socially equitable, where rural perspectives contribute to shaping the future of technology.
-                </p>
+
               </div>
             </div>
           </div>
