@@ -10,7 +10,7 @@ const AboutHero = () => {
           <div className="w-full lg:w-1/2 px-6 lg:px-12 relative z-10">
             <div className="max-w-3xl">
               <h1 className="font-['Poppins'] font-extrabold text-5xl md:text-6xl lg:text-7xl mb-8 text-white lg:text-[#3B3D87]">
-                Our Story
+                <br />Our Story
               </h1>
               <div className="space-y-6 text-white lg:text-gray-700 text-lg md:text-xl">
                 <p className="text-justify">
