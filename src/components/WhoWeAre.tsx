@@ -6,7 +6,7 @@ const WhoWeAre = () => {
           {/* Content */}
           <div className="w-full">
 
-            <h2 className="font-['Poppins'] font-extrabold text-5xl md:text-6xl lg:text-7xl mb-8 text-white lg:text-[#3B3D87]">
+            <h2 className="font-['Poppins'] font-extrabold text-5xl md:text-6xl lg:text-7xl mb-8 text-[#3B3D87]">
               What We Do
             </h2>
             
