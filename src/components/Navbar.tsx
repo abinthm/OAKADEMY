@@ -74,9 +74,9 @@ const Navbar = ({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) => {
         aria-label="Mobile navigation"
       >
         <div className="container mx-auto px-4 flex flex-col space-y-4 max-w-5xl">
-          <NavLink to="/about" mobile>ABOUT US</NavLink>
-          <NavLink href="https://oakademy-blogs.vercel.app/" target="_blank" rel="noopener noreferrer" mobile>VOICE OF THE OAK</NavLink>
-          <NavLink href="#contact" mobile>CONTACT US</NavLink>
+          <NavLink to="/about" mobile onMobileClick={() => setMobileMenuOpen(false)}>ABOUT US</NavLink>
+          <NavLink href="/voice-of-oak" target="_blank" rel="noopener noreferrer" mobile onMobileClick={() => setMobileMenuOpen(false)}>VOICE OF THE OAK</NavLink>
+          <NavLink href="#contact" mobile onMobileClick={() => setMobileMenuOpen(false)}>CONTACT US</NavLink>
           <JoinButton mobile />
         </div>
       </div>
@@ -91,17 +91,24 @@ interface NavLinkProps {
   mobile?: boolean;
   target?: string;
   rel?: string;
+  onMobileClick?: () => void;
 }
 
-const NavLink = ({ href, to, children, mobile, target, rel }: NavLinkProps) => {
+const NavLink = ({ href, to, children, mobile, target, rel, onMobileClick }: NavLinkProps) => {
   const className = `
     text-white font-medium tracking-wide hover:text-gray-200 transition-colors
     ${mobile ? 'text-lg py-2 border-b border-white/15' : 'text-xs'}
   `;
 
+  const handleClick = () => {
+    if (mobile && onMobileClick) {
+      onMobileClick();
+    }
+  };
+
   if (to) {
     return (
-      <Link to={to} className={className}>
+      <Link to={to} className={className} onClick={handleClick}>
         {children}
       </Link>
     );
@@ -113,6 +120,7 @@ const NavLink = ({ href, to, children, mobile, target, rel }: NavLinkProps) => {
       target={target}
       rel={rel}
       className={className}
+      onClick={handleClick}
     >
       {children}
     </a>
