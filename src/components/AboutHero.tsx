@@ -22,11 +22,7 @@ By blending inclusion, sustainability, and community-driven innovation, Oakademy
 <br /><br />  
                 </p>
 
-                <a href="/voice-of-oak" className="inline-block">
-                  <button className="bg-[#3B3D87] text-white px-8 py-3 rounded-full hover:bg-opacity-90 transition-all">
-                    Voice of the OK
-                  </button>
-                </a>
+ 
 
               </div>
             </div>
