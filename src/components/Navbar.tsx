@@ -36,10 +36,18 @@ const Navbar = ({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) => {
     >
       <div className="container mx-auto px-4 py-3 md:py-1 flex items-center justify-between max-w-5xl">
         {/* Logo */}
-        <Link to="/" className="flex items-center -my-2">
+        <Link 
+          to="/" 
+          className="flex items-center -my-2"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo(0, 0);
+            window.location.href = '/';
+          }}
+        >
           <img 
             src={frame1} 
-            alt="Dear Asian Youth Logo" 
+            alt="oakademy" 
             className="h-24 md:h-16 lg:h-20 w-auto"
           />
         </Link>
@@ -65,15 +73,20 @@ const Navbar = ({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) => {
       {/* Mobile Menu */}
       <div 
         className={`
-          ${mobileMenuOpen ? 'block' : 'hidden'} 
           md:hidden bg-[#3B3D87] absolute w-full 
-          transition-all duration-300 ease-in-out overflow-hidden 
-          ${mobileMenuOpen ? 'max-h-[300px] opacity-100 py-4' : 'max-h-0 opacity-0'}
+          transition-all duration-700 ease-in-out
+          ${mobileMenuOpen ? 'visible opacity-100 max-h-[300px] py-4' : 'invisible opacity-0 max-h-0'}
         `}
         role="navigation"
         aria-label="Mobile navigation"
       >
-        <div className="container mx-auto px-4 flex flex-col space-y-4 max-w-5xl">
+        <div 
+          className={`
+            container mx-auto px-4 flex flex-col space-y-4 max-w-5xl
+            transition-all duration-700 ease-in-out
+            ${mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-16'}
+          `}
+        >
           <NavLink to="/about" mobile onMobileClick={() => setMobileMenuOpen(false)}>ABOUT US</NavLink>
           <NavLink href="/voice-of-oak" target="_blank" rel="noopener noreferrer" mobile onMobileClick={() => setMobileMenuOpen(false)}>VOICE OF THE OAK</NavLink>
           <NavLink href="#contact" mobile onMobileClick={() => setMobileMenuOpen(false)}>CONTACT US</NavLink>
