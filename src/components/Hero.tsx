@@ -11,7 +11,7 @@ const Hero = () => {
             <div className="relative w-full h-full overflow-hidden group">
               <img 
                 src={heroImage} 
-                alt="Dear Asian Youth Community" 
+                alt="oakademy" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               {/* Overlay for better text readability */}
@@ -22,12 +22,12 @@ const Hero = () => {
           {/* Left Side - Content */}
           <div className="w-full lg:w-1/2 px-4 lg:px-8 flex flex-col justify-start lg:justify-center h-full lg:h-auto relative z-20 pt-20 lg:pt-8">
             {/* Heading */}
-            <h1 className="font-['Poppins'] font-extrabold text-[2.5rem] md:text-5xl lg:text-7xl leading-[1.05] mb-2 sm:mb-8 text-white lg:text-[#3B3D87]">
+            <h1 className="font-['Poppins'] font-extrabold text-[3.8rem] md:text-7xl lg:text-7xl leading-[1.05] mb-2 sm:mb-8 text-white lg:text-[#3B3D87]">
               <span className="whitespace-nowrap">Decoding</span>
               <br />
               <span className="block mt-2 whitespace-nowrap">Inclusivity</span>
             </h1>
-            <p className="block lg:hidden"><br /><br /></p>
+            <p className="block lg:hidden"></p>
 
 
             {/* Description */}
