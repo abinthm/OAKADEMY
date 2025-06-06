@@ -27,7 +27,7 @@ const Hero = () => {
               <br />
               <span className="block mt-2 whitespace-nowrap">Inclusivity</span>
             </h1>
-            <p className="block lg:hidden"><br /></p>
+            <p className="block lg:hidden"><br /><br /></p>
 
 
             {/* Description */}
@@ -38,7 +38,7 @@ const Hero = () => {
             <p className="text-white lg:text-[#3B3D87] lg:text-opacity-80 text-l sm:text-sm md:text-base mb-4 max-w-sm sm:max-w-lg md:max-w-2xl break-words text-justify pr-0">
               If you believe in rewriting the future with purpose and ensuring no voice is left behind in the age of AI - your journey starts here.
             </p>
-            <p className="block lg:hidden"><br /></p>
+            <p className="block lg:hidden"></p>
             {/* CTA Button */}
             <a 
               href="https://docs.google.com/forms/d/e/1FAIpQLSeDgu9Xg07SzVRLhM9SOD1LgXB8Fa4-98H1Ljk7w5S5rFFMxA/viewform?usp=header" 
