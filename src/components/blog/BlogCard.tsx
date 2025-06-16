@@ -4,7 +4,7 @@ import { Calendar, User, Edit, Trash2, Clock } from 'lucide-react';
 import { BlogPost } from '../../types';
 import { useAuthStore } from '../../store/authStore';
 import { useBlogStore } from '../../store/blogStore';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../../lib/supabaseClient';
 
 interface BlogCardProps {
   post: BlogPost;
