@@ -1,52 +1,37 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
-import { useAuthStore } from '../store/authStore';
 
 const AuthCallback: React.FC = () => {
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuthStore();
-  const authSubscription = useRef<any>(null);
 
   useEffect(() => {
-    // Listener for auth state changes
-    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth state change detected:', event, session);
-      if (session) {
-        // Session exists, user is authenticated via Supabase
-        // The profile creation/fetching logic should already be handled by the useAuthStore's login/register flow
-        // if this is a first-time Google sign-in.
-        console.log('Session found in AuthCallback, navigating to /voice-of-oak');
-        navigate('/voice-of-oak', { replace: true });
-      } else if (event === 'SIGNED_OUT') {
-        // User signed out or session expired
-        console.log('No session found or signed out, navigating to login');
-        navigate('/voice-of-oak/login', { replace: true });
-      } else if (event === 'INITIAL_SESSION' && !session) {
-        // No initial session, likely not logged in
-        console.log('No initial session, navigating to login');
-        navigate('/voice-of-oak/login', { replace: true });
-      }
-    });
+    const handleSession = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('AuthCallback: Error getting session:', error);
+          navigate('/voice-of-oak/login', { replace: true });
+          return;
+        }
 
-    authSubscription.current = data?.subscription;
-
-    // Initial check (in case onAuthStateChange doesn't fire immediately on first load)
-    const checkInitialSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        console.log('Initial session found via getSession, navigating to /voice-of-oak');
-        navigate('/voice-of-oak', { replace: true });
+        if (session) {
+          console.log('AuthCallback: Session found after redirect, navigating to /voice-of-oak');
+          // The useAuthStore listener will pick up this session and update global state.
+          navigate('/voice-of-oak', { replace: true });
+        } else {
+          console.log('AuthCallback: No session found, navigating to login.');
+          navigate('/voice-of-oak/login', { replace: true });
+        }
+      } catch (err) {
+        console.error('AuthCallback: Unexpected error during session handling:', err);
+        navigate('/voice-of-oak/login', { replace: true });
       }
     };
 
-    checkInitialSession();
+    handleSession();
 
-    return () => {
-      if (authSubscription.current) {
-        authSubscription.current.unsubscribe();
-      }
-    };
   }, [navigate]);
 
   return (

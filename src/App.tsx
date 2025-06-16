@@ -26,11 +26,11 @@ const AppRoutes = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user } = useAuthStore();
   const navigate = useNavigate();
-  const initializeAuth = useAuthStore((state) => state.initializeAuth);
 
   useEffect(() => {
-    initializeAuth();
-  }, [initializeAuth]);
+    // The initializeAuth function is now called automatically when useAuthStore is created.
+    // No need to call it explicitly here.
+  }, []);
 
   return (
       <div className="min-h-screen">
