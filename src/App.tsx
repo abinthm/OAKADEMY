@@ -21,16 +21,18 @@ import ComingSoon from './pages/ComingSoon';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import AdminRoute from './components/auth/AdminRoute';
+import Footer from './components/Footer';
+import NavbarTwo from './components/layout/NavbarTwo';
 
 const AppRoutes = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user } = useAuthStore();
   const navigate = useNavigate();
+  const initializeAuth = useAuthStore((state) => state.initializeAuth);
 
   useEffect(() => {
-    // The initializeAuth function is now called automatically when useAuthStore is created.
-    // No need to call it explicitly here.
-  }, []);
+    initializeAuth();
+  }, [initializeAuth]);
 
   return (
       <div className="min-h-screen">
