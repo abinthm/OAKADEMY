@@ -147,77 +147,28 @@ export const useAuthStore = create<AuthState>()(
       },
 
       loginWithGoogle: async () => {
-        const { data: authData, error: authError } = await supabase.auth.signInWithOAuth({
+        const { data, error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
             redirectTo: `${window.location.origin}/voice-of-oak/auth/callback`
           }
         });
 
-        if (authError) {
-          console.error('Google auth error:', authError);
-          throw new Error(authError.message);
+        if (error) {
+          console.error('Google auth error:', error);
+          throw new Error(error.message);
         }
 
-        if (!authData.user) {
-          throw new Error('No user data returned');
+        // The redirect happens here, so the code below will not execute immediately
+        // The session will be handled by the AuthCallback component via onAuthStateChange
+        // and then the useAuthStore's listener will pick it up.
+
+        // No explicit set here as the redirect will handle it.
+        // We return a dummy user or throw if it didn't redirect
+        if (!data) {
+          throw new Error('No data returned from signInWithOAuth, expected redirect');
         }
-
-        console.log('Google auth successful, fetching profile for user:', authData.user.id);
-
-        let userProfile;
-        const { data: profile, error: profileError } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', authData.user.id)
-          .single();
-
-        if (profileError) {
-          console.error('Profile fetch error:', profileError);
-          // Create profile if it doesn't exist
-          console.log('Attempting to create profile for user:', authData.user.id);
-          
-          const { data: insertData, error: insertError } = await supabase
-            .from('profiles')
-            .insert([
-              {
-                id: authData.user.id,
-                name: authData.user.user_metadata?.full_name || authData.user.email?.split('@')[0],
-                avatar_url: authData.user.user_metadata?.avatar_url,
-              }
-            ])
-            .select()
-            .single();
-
-          if (insertError) {
-            console.error('Profile creation error:', insertError);
-            throw new Error(`Failed to create user profile: ${insertError.message}`);
-          }
-
-          if (!insertData) {
-            throw new Error('No profile data returned after creation');
-          }
-
-          userProfile = insertData;
-          console.log('Profile created successfully:', userProfile);
-        } else {
-          userProfile = profile;
-          console.log('Existing profile found:', userProfile);
-        }
-
-        const user: User = {
-          id: authData.user.id,
-          email: authData.user.email!,
-          name: userProfile.name,
-          bio: userProfile.bio || undefined,
-          avatar: userProfile.avatar_url || undefined,
-          role: userProfile.role || 'Community Contributor',
-          createdAt: new Date(userProfile.created_at),
-          isAdmin: userProfile.is_admin || false,
-        };
-
-        set({ user, isAuthenticated: true });
-        return user;
+        return {} as User; // Return a dummy user, as actual user will be set via onAuthStateChange
       },
       
       logout: async () => {
@@ -312,7 +263,74 @@ export const useAuthStore = create<AuthState>()(
           ...state.user,
           isAdmin: state.user.isAdmin // Ensure admin status is persisted
         } : null
-      })
+      }),
+      onRehydrateStorage: () => {
+        // This runs when the store is rehydrated from local storage.
+        // Now, we'll set up the auth state change listener.
+        console.log('AuthStore: Setting up onAuthStateChange listener.');
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+          console.log('AuthStore Listener: Auth state changed:', event, session);
+          if (session) {
+            let userProfile;
+            try {
+              const { data: profile, error: profileError } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', session.user.id)
+                .single();
+
+              if (profileError && profileError.code === 'PGRST116') { // No rows found
+                console.log('AuthStore Listener: Profile not found, creating for user:', session.user.id);
+                const { data: insertData, error: insertError } = await supabase
+                  .from('profiles')
+                  .insert([
+                    {
+                      id: session.user.id,
+                      name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0],
+                      avatar_url: session.user.user_metadata?.avatar_url,
+                    }
+                  ])
+                  .select()
+                  .single();
+
+                if (insertError) throw insertError;
+                if (!insertData) throw new Error('No profile data returned after creation');
+                userProfile = insertData;
+                console.log('AuthStore Listener: Profile created successfully:', userProfile);
+              } else if (profileError) {
+                throw profileError;
+              } else {
+                userProfile = profile;
+                console.log('AuthStore Listener: Existing profile found:', userProfile);
+              }
+
+              const user: User = {
+                id: session.user.id,
+                email: session.user.email!,
+                name: userProfile.name,
+                bio: userProfile.bio || undefined,
+                avatar: userProfile.avatar_url || undefined,
+                role: userProfile.role || 'Community Contributor',
+                createdAt: new Date(userProfile.created_at),
+                isAdmin: userProfile.is_admin || false,
+              };
+              set({ user, isAuthenticated: true });
+              console.log('AuthStore Listener: User state set:', user);
+
+            } catch (error) {
+              console.error('AuthStore Listener: Error fetching/creating profile:', error);
+              set({ user: null, isAuthenticated: false }); // Clear state on error
+            }
+          } else {
+            // No session, or signed out
+            set({ user: null, isAuthenticated: false });
+            console.log('AuthStore Listener: User state cleared.');
+          }
+        });
+
+        // Return a function to unsubscribe when the store is no longer active.
+        return () => { subscription.unsubscribe(); };
+      },
     }
   )
 );
