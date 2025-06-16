@@ -265,12 +265,14 @@ export const useAuthStore = create<AuthState>()(
         } : null
       }),
       onRehydrateStorage: () => {
+        console.log('AuthStore: onRehydrateStorage triggered.');
         // This runs when the store is rehydrated from local storage.
         // Now, we'll set up the auth state change listener.
         console.log('AuthStore: Setting up onAuthStateChange listener.');
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
           console.log('AuthStore Listener: Auth state changed:', event, session);
           if (session) {
+            console.log('AuthStore Listener: Session is valid. Attempting to fetch/create profile.', session.user.id);
             let userProfile;
             try {
               const { data: profile, error: profileError } = await supabase
@@ -293,11 +295,17 @@ export const useAuthStore = create<AuthState>()(
                   .select()
                   .single();
 
-                if (insertError) throw insertError;
-                if (!insertData) throw new Error('No profile data returned after creation');
+                if (insertError) {
+                  console.error('AuthStore Listener: Profile creation error:', insertError);
+                  throw insertError;
+                }
+                if (!insertData) {
+                  throw new Error('AuthStore Listener: No profile data returned after creation');
+                }
                 userProfile = insertData;
                 console.log('AuthStore Listener: Profile created successfully:', userProfile);
               } else if (profileError) {
+                console.error('AuthStore Listener: Error fetching profile:', profileError);
                 throw profileError;
               } else {
                 userProfile = profile;
