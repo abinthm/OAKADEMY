@@ -5,8 +5,11 @@ import { useBlogStore } from '../store/blogStore';
 import { useAuthStore } from '../store/authStore';
 import { supabase } from '../lib/supabaseClient';
 import { BlogPost } from '../types';
+import usePageTitle from '../hooks/usePageTitle';
 
 const AdminDashboard: React.FC = () => {
+  usePageTitle('Admin Dashboard');
+
   const navigate = useNavigate();
   const { user } = useAuthStore();
   const { getPendingPosts, approvePost, rejectPost, fetchPosts } = useBlogStore();

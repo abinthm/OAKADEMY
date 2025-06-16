@@ -8,6 +8,7 @@ interface AuthState {
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<User>;
   register: (name: string, email: string, password: string) => Promise<User>;
+  loginWithGoogle: () => Promise<User>;
   logout: () => Promise<void>;
   updateProfile: (userData: Partial<User>) => Promise<User>;
 }
@@ -139,6 +140,80 @@ export const useAuthStore = create<AuthState>()(
           role: 'Community Contributor',
           createdAt: new Date(profileData.created_at),
           isAdmin: false,
+        };
+
+        set({ user, isAuthenticated: true });
+        return user;
+      },
+
+      loginWithGoogle: async () => {
+        const { data: authData, error: authError } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: `${window.location.origin}/voice-of-oak/auth/callback`
+          }
+        });
+
+        if (authError) {
+          console.error('Google auth error:', authError);
+          throw new Error(authError.message);
+        }
+
+        if (!authData.user) {
+          throw new Error('No user data returned');
+        }
+
+        console.log('Google auth successful, fetching profile for user:', authData.user.id);
+
+        let userProfile;
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', authData.user.id)
+          .single();
+
+        if (profileError) {
+          console.error('Profile fetch error:', profileError);
+          // Create profile if it doesn't exist
+          console.log('Attempting to create profile for user:', authData.user.id);
+          
+          const { data: insertData, error: insertError } = await supabase
+            .from('profiles')
+            .insert([
+              {
+                id: authData.user.id,
+                name: authData.user.user_metadata?.full_name || authData.user.email?.split('@')[0],
+                avatar_url: authData.user.user_metadata?.avatar_url,
+              }
+            ])
+            .select()
+            .single();
+
+          if (insertError) {
+            console.error('Profile creation error:', insertError);
+            throw new Error(`Failed to create user profile: ${insertError.message}`);
+          }
+
+          if (!insertData) {
+            throw new Error('No profile data returned after creation');
+          }
+
+          userProfile = insertData;
+          console.log('Profile created successfully:', userProfile);
+        } else {
+          userProfile = profile;
+          console.log('Existing profile found:', userProfile);
+        }
+
+        const user: User = {
+          id: authData.user.id,
+          email: authData.user.email!,
+          name: userProfile.name,
+          bio: userProfile.bio || undefined,
+          avatar: userProfile.avatar_url || undefined,
+          role: userProfile.role || 'Community Contributor',
+          createdAt: new Date(userProfile.created_at),
+          isAdmin: userProfile.is_admin || false,
         };
 
         set({ user, isAuthenticated: true });

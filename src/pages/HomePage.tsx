@@ -5,6 +5,7 @@ import { useBlogStore } from '../store/blogStore';
 import { useAuthStore } from '../store/authStore';
 import BlogCard from '../components/blog/BlogCard';
 import { Category, BlogPost } from '../types';
+import usePageTitle from '../hooks/usePageTitle';
 
 // Shortened category names for tabs
 const categoryTabs = {
@@ -33,6 +34,7 @@ const categories: Category[] = [
 ];
 
 const HomePage: React.FC = () => {
+  usePageTitle('Voice of the Oak');
   const { posts, fetchPosts } = useBlogStore();
   const { user } = useAuthStore();
   const [activeCategory, setActiveCategory] = useState<Category | 'All'>('All');

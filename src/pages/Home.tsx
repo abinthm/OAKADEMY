@@ -3,8 +3,11 @@ import { motion } from 'framer-motion';
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
 import ContactUs from '../components/ContactUs';
+import usePageTitle from '../hooks/usePageTitle';
 
 const Home = () => {
+  usePageTitle('Home');
+  
   return (
     <motion.main
       initial={{ opacity: 0, y: 40 }}

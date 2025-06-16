@@ -5,8 +5,11 @@ import WhatWeDo from '../components/WhatWeDo';
 import WhereWeWork from '../components/WhereWeWork';
 import ContactUs from '../components/ContactUs';
 import { motion } from 'framer-motion';
+import usePageTitle from '../hooks/usePageTitle';
 
 const About = () => {
+  usePageTitle('About Us');
+  
   return (
     <motion.main
       initial={{ opacity: 0, y: 20 }}

@@ -14,6 +14,8 @@ import ViewBlogPage from './pages/ViewBlogPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminDashboard from './pages/AdminDashboard';
 import PendingPostsPage from './pages/PendingPostsPage';
+import ContactPage from './pages/ContactPage';
+import AuthCallback from './pages/AuthCallback';
 
 // Route protection
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -76,6 +78,8 @@ const AppRoutes = () => {
             user ? <Navigate to="/voice-of-oak" replace /> : <RegisterPage />
             } />
           <Route path="post/:id" element={<ViewBlogPage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="auth/callback" element={<AuthCallback />} />
             
             {/* Protected Routes */}
           <Route path="write" element={<ProtectedRoute><WriteBlogPage /></ProtectedRoute>} />

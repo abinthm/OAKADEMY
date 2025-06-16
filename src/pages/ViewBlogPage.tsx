@@ -4,6 +4,7 @@ import { useBlogStore } from '../store/blogStore';
 import { useAuthStore } from '../store/authStore';
 import BlogDetail from '../components/blog/BlogDetail';
 import { User } from '../types';
+import usePageTitle from '../hooks/usePageTitle';
 
 const ViewBlogPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +17,8 @@ const ViewBlogPage: React.FC = () => {
     setLoading(true);
     setTimeout(() => setLoading(false), 500); // Simulate loading
   }, [id]);
+  
+  usePageTitle(id ? getPostById(id)?.title || 'Blog Post' : 'Blog Post');
   
   if (loading) {
     return (
