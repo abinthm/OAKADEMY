@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { useAuthStore } from '../store/authStore';
@@ -6,10 +6,11 @@ import { useAuthStore } from '../store/authStore';
 const AuthCallback: React.FC = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuthStore();
+  const authSubscription = useRef<any>(null);
 
   useEffect(() => {
     // Listener for auth state changes
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log('Auth state change detected:', event, session);
       if (session) {
         // Session exists, user is authenticated via Supabase
@@ -28,6 +29,8 @@ const AuthCallback: React.FC = () => {
       }
     });
 
+    authSubscription.current = data?.subscription;
+
     // Initial check (in case onAuthStateChange doesn't fire immediately on first load)
     const checkInitialSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -40,7 +43,9 @@ const AuthCallback: React.FC = () => {
     checkInitialSession();
 
     return () => {
-      authListener.unsubscribe();
+      if (authSubscription.current) {
+        authSubscription.current.unsubscribe();
+      }
     };
   }, [navigate]);
 
