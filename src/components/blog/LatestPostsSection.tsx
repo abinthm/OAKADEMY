@@ -34,34 +34,8 @@ const LatestPostsSection: React.FC = () => {
     ? approvedAndPublishedPosts[currentSlideIndex] 
     : null;
   
-  // Get the remaining latest posts for the list (including the featured one, showing up to 3)
-  let otherLatestPosts: BlogPost[] = [];
-
-  if (featuredPost) {
-    otherLatestPosts.push(featuredPost);
-  }
-
-  const nonFeaturedPosts = approvedAndPublishedPosts.filter(
-    (post) => post.id !== featuredPost?.id
-  );
-
-  otherLatestPosts = [...otherLatestPosts, ...nonFeaturedPosts.slice(0, 2)];
-
-  const uniquePostIds = new Set<string>();
-  const finalOtherLatestPosts: BlogPost[] = [];
-  for (const post of otherLatestPosts) {
-    if (!uniquePostIds.has(post.id)) {
-      uniquePostIds.add(post.id);
-      finalOtherLatestPosts.push(post);
-    }
-    if (finalOtherLatestPosts.length >= 3) {
-      break;
-    }
-  }
-
-  finalOtherLatestPosts.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-
-  otherLatestPosts = finalOtherLatestPosts;
+  // Get the remaining latest posts for the list (always the top 3 latest)
+  const otherLatestPosts = approvedAndPublishedPosts.slice(0, 3);
 
   if (!featuredPost && otherLatestPosts.length === 0) {
     return (
@@ -107,6 +81,7 @@ const LatestPostsSection: React.FC = () => {
 
           {/* Other Latest Posts (Right Column) */}
           <div className="lg:col-span-1 space-y-6 max-h-[500px] overflow-y-auto pr-2">
+            {console.log("LatestPostsSection: otherLatestPosts:", otherLatestPosts)}
             {otherLatestPosts.map((post) => (
               <BlogCard key={post.id} post={post} featuredPostId={featuredPost?.id} />
             ))}

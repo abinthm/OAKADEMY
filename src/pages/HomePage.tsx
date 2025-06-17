@@ -56,11 +56,14 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     // Only show approved posts on the homepage
-    let result = posts.filter(post => post.status === 'approved' && post.published);
-    
-    console.log('HomePage: All posts from store:', posts);
-    console.log('HomePage: Filtered posts before search:', result);
+    let allApprovedAndPublishedPosts = posts.filter(post => post.status === 'approved' && post.published);
 
+    // Sort by date to consistently identify the "latest"
+    allApprovedAndPublishedPosts.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+    // Exclude the top 3 latest posts which are handled by LatestPostsSection
+    let result = allApprovedAndPublishedPosts.slice(3); // Skip the first 3 latest posts
+    
     if (activeCategory !== 'All') {
       result = result.filter(post => post.category === activeCategory);
     }
@@ -75,7 +78,6 @@ const HomePage: React.FC = () => {
       );
     }
     
-    console.log('HomePage: Final filtered posts:', result);
     setFilteredPosts(result);
   }, [posts, activeCategory, searchTerm]);
 
