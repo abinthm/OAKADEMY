@@ -6,6 +6,7 @@ import { useAuthStore } from '../store/authStore';
 import BlogCard from '../components/blog/BlogCard';
 import { Category, BlogPost } from '../types';
 import usePageTitle from '../hooks/usePageTitle';
+import LatestPostsSection from '../components/blog/LatestPostsSection';
 
 // Shortened category names for tabs
 const categoryTabs = {
@@ -98,6 +99,8 @@ const HomePage: React.FC = () => {
           Start Writing - Your Voice Matters
         </Link>
       </div>
+
+      <LatestPostsSection />
 
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 px-4">Top Voices This Month</h2>
