@@ -33,6 +33,13 @@ const NavbarTwo: React.FC = () => {
               <span className="text-[#3B3D87] font-serif text-base md:text-xl lg:text-3xl font-[900] whitespace-nowrap tracking-wide">Voice of the Oak</span>
             </Link>
             
+            <Link
+              to="/achievements"
+              className="px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-[#3B3D87] hover:bg-gray-50 transition-colors"
+            >
+              Achievements
+            </Link>
+            
             {user ? (
               <>
                 <Link

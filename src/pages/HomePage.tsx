@@ -7,6 +7,7 @@ import BlogCard from '../components/blog/BlogCard';
 import { Category, BlogPost } from '../types';
 import usePageTitle from '../hooks/usePageTitle';
 import LatestPostsSection from '../components/blog/LatestPostsSection';
+import Testimonials from '../components/Testimonials';
 
 // Shortened category names for tabs
 const categoryTabs = {
@@ -57,6 +58,9 @@ const HomePage: React.FC = () => {
     // Only show approved posts on the homepage
     let result = posts.filter(post => post.status === 'approved' && post.published);
     
+    console.log('HomePage: All posts from store:', posts);
+    console.log('HomePage: Filtered posts before search:', result);
+
     if (activeCategory !== 'All') {
       result = result.filter(post => post.category === activeCategory);
     }
@@ -71,6 +75,7 @@ const HomePage: React.FC = () => {
       );
     }
     
+    console.log('HomePage: Final filtered posts:', result);
     setFilteredPosts(result);
   }, [posts, activeCategory, searchTerm]);
 
@@ -101,6 +106,8 @@ const HomePage: React.FC = () => {
       </div>
 
       <LatestPostsSection />
+
+      <Testimonials />
 
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 px-4">Top Voices This Month</h2>

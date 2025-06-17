@@ -8,9 +8,10 @@ import { supabase } from '../../lib/supabaseClient';
 
 interface BlogCardProps {
   post: BlogPost;
+  featuredPostId?: string;
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
+const BlogCard: React.FC<BlogCardProps> = ({ post, featuredPostId }) => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
   const { deletePost } = useBlogStore();
@@ -72,15 +73,19 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
     navigate(`/edit/${post.id}`);
   };
 
+  const isFeatured = String(post.id) === String(featuredPostId);
+
   return (
-    <article className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-      <Link to={`/voice-of-oak/post/${post.id}`} className="block relative">
+    <article 
+      className={`bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg`} 
+    >
+      <Link to={`/voice-of-oak/post/${post.id}`} className="block relative" style={{ backgroundColor: isFeatured ? '#F5F5FA' : '' }}>
         {post.cover_image && (
           <div className="relative h-48 overflow-hidden">
             <img
-              src={post.cover_image}
+              src={post.cover_image || ''}
               alt={post.title}
-              className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-105"
+              className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-105 relative z-0"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 console.error('Error loading image:', target.src);
@@ -115,7 +120,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
         
         <div className="p-6">
           <h2 className="font-serif text-xl font-bold text-gray-900 mb-2 line-clamp-2 hover:text-[#3B3D87] transition-colors">
-            <Link to={`/post/${post.id}`} className="text-gray-900 hover:text-[#3B3D87]">
+            <Link to={`/voice-of-oak/post/${post.id}`} className="text-gray-900 hover:text-[#3B3D87]">
               {post.title}
             </Link>
           </h2>

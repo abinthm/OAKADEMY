@@ -24,6 +24,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import AdminRoute from './components/auth/AdminRoute';
 import Footer from './components/Footer';
 import NavbarTwo from './components/layout/NavbarTwo';
+import AchievementsPage from './pages/AchievementsPage';
 
 const AppRoutes = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -89,6 +90,14 @@ const AppRoutes = () => {
             </AdminRoute>
           } />
         </Route>
+        <Route path="/achievements" element={
+          <>
+            <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+        <main className={`transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-30' : 'opacity-100'}`}>
+              <AchievementsPage />
+            </main>
+          </>
+        } />
             <Route path="*" element={<NotFound />} />
           </Routes>
       </div>

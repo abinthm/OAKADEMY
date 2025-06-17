@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useBlogStore } from '../../store/blogStore';
 import BlogCard from './BlogCard';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const LatestPostsSection: React.FC = () => {
   const { posts, fetchPosts } = useBlogStore();
   const navigate = useNavigate();
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   useEffect(() => {
     if (posts.length === 0) {
@@ -16,10 +17,51 @@ const LatestPostsSection: React.FC = () => {
   // Filter for approved and published posts only
   const approvedAndPublishedPosts = posts.filter(post => post.status === 'approved' && post.published);
 
-  // Get the latest post as the featured post
-  const featuredPost = approvedAndPublishedPosts.length > 0 ? approvedAndPublishedPosts[0] : null;
-  // Get the remaining latest posts for the list
-  const otherLatestPosts = approvedAndPublishedPosts.slice(1, 5); // Take up to 4 other latest posts
+  // Set up the slideshow interval
+  useEffect(() => {
+    if (approvedAndPublishedPosts.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentSlideIndex(prevIndex => 
+          (prevIndex + 1) % approvedAndPublishedPosts.length
+        );
+      }, 5000); // Change slide every 5 seconds
+      return () => clearInterval(interval);
+    }
+  }, [approvedAndPublishedPosts]);
+
+  // Get the featured post based on the current slide index
+  const featuredPost = approvedAndPublishedPosts.length > 0 
+    ? approvedAndPublishedPosts[currentSlideIndex] 
+    : null;
+  
+  // Get the remaining latest posts for the list (including the featured one, showing up to 3)
+  let otherLatestPosts: BlogPost[] = [];
+
+  if (featuredPost) {
+    otherLatestPosts.push(featuredPost);
+  }
+
+  const nonFeaturedPosts = approvedAndPublishedPosts.filter(
+    (post) => post.id !== featuredPost?.id
+  );
+
+  otherLatestPosts = [...otherLatestPosts, ...nonFeaturedPosts.slice(0, 2)];
+
+  const uniquePostIds = new Set<string>();
+  const finalOtherLatestPosts: BlogPost[] = [];
+  for (const post of otherLatestPosts) {
+    if (!uniquePostIds.has(post.id)) {
+      uniquePostIds.add(post.id);
+      finalOtherLatestPosts.push(post);
+    }
+    if (finalOtherLatestPosts.length >= 3) {
+      break;
+    }
+  }
+
+  finalOtherLatestPosts.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+  otherLatestPosts = finalOtherLatestPosts;
 
   if (!featuredPost && otherLatestPosts.length === 0) {
     return (
@@ -39,13 +81,13 @@ const LatestPostsSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Featured Post (Left Column) */}
           {featuredPost && (
-            <div className="lg:col-span-2 bg-gray-50 rounded-lg shadow-md overflow-hidden flex flex-col">
+            <div className="lg:col-span-2 bg-gray-50 rounded-lg shadow-md overflow-hidden flex flex-col relative">
               <img 
-                src={featuredPost.image_url || 'https://via.placeholder.com/600x400?text=Featured+Image'} 
+                src={featuredPost.image_url || ''} 
                 alt={featuredPost.title} 
-                className="w-full h-80 object-cover"
+                className="w-full h-80 object-cover relative z-0"
               />
-              <div className="p-6 flex flex-col flex-grow">
+              <div className="p-6 flex flex-col flex-grow relative z-10">
                 <h3 className="text-3xl font-bold text-gray-900 mb-4 cursor-pointer hover:text-[#3B3D87] transition-colors"
                     onClick={() => navigate(`/voice-of-oak/post/${featuredPost.id}`)}>
                   {featuredPost.title}
@@ -64,24 +106,12 @@ const LatestPostsSection: React.FC = () => {
           )}
 
           {/* Other Latest Posts (Right Column) */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-6 max-h-[500px] overflow-y-auto pr-2">
             {otherLatestPosts.map((post) => (
-              <BlogCard key={post.id} post={post} />
+              <BlogCard key={post.id} post={post} featuredPostId={featuredPost?.id} />
             ))}
           </div>
         </div>
-
-        {/* Optional: Add a button to view all posts if more than 5 exist */}
-        {approvedAndPublishedPosts.length > 5 && (
-          <div className="text-center mt-12">
-            <button
-              onClick={() => navigate('/voice-of-oak/blog-archive')} // You might need a dedicated all blogs page
-              className="px-8 py-4 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors font-semibold"
-            >
-              View All Posts
-            </button>
-          </div>
-        )}
 
       </div>
     </section>
