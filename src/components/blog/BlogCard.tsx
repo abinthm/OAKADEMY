@@ -60,7 +60,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featuredPostId }) => {
       try {
         await deletePost(post.id);
         // Optionally refresh the page or update the UI
-        window.location.reload();
+        // window.location.reload(); // Removed as store update handles refresh
       } catch (error) {
         console.error('Error deleting post:', error);
         alert('Failed to delete post. Please try again.');

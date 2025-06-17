@@ -9,10 +9,9 @@ const LatestPostsSection: React.FC = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   useEffect(() => {
-    if (posts.length === 0) {
-      fetchPosts();
-    }
-  }, [posts, fetchPosts]);
+    // Always fetch posts when the component mounts or fetchPosts changes
+    fetchPosts();
+  }, [fetchPosts]);
 
   // Filter for approved and published posts only
   const approvedAndPublishedPosts = posts.filter(post => post.status === 'approved' && post.published);
