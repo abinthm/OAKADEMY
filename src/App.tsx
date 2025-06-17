@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -36,6 +37,10 @@ const AppRoutes = () => {
 
   return (
       <div className="min-h-screen">
+        <Helmet>
+          <title>Oakademy - Online Learning Platform</title>
+          <meta name="description" content="Oakademy is an online learning platform offering a variety of courses and blog content to empower learners and enhance skills." />
+        </Helmet>
       <Routes>
         <Route path="/coming-soon" element={<ComingSoon />} />
         <Route path="/" element={
