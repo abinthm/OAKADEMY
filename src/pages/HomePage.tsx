@@ -71,6 +71,27 @@ const HomePage: React.FC = () => {
     setFilteredPosts(result);
   }, [posts, activeCategory, searchTerm]);
 
+  // Filter posts for the new featured section
+  const sortedPosts = [...posts].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+  // Carousel state for featured post
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (sortedPosts.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % sortedPosts.length);
+      }, 5000); // Change every 5 seconds
+      return () => clearInterval(interval);
+    }
+  }, [sortedPosts.length]);
+
+  const featuredPost = sortedPosts[currentIndex];
+  // Show 5 posts starting from the current featured post (including it)
+  const sidePosts = Array.from({ length: Math.min(5, sortedPosts.length) }, (_, i) =>
+    sortedPosts[(currentIndex + i) % sortedPosts.length]
+  );
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col items-center justify-center max-w-4xl mx-auto mb-16 px-4">
@@ -96,6 +117,55 @@ const HomePage: React.FC = () => {
           Start Writing - Your Voice Matters
         </Link>
       </div>
+
+      {/* New AI & Deepfake Fraud News Section */}
+      <section className="mb-12">
+        <h2 className="text-4xl font-extrabold text-gray-900 text-center mb-2">AI & Deepfake Fraud News</h2>
+        <p className="text-center text-gray-600 mb-8">Stay updated on the latest AI fraud and deepfake misuse cases affecting society.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          {/* Featured Post (Left, spans 2 columns) */}
+          <div className="md:col-span-2 bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
+            {featuredPost && featuredPost.cover_image && (
+              <img
+                src={featuredPost.cover_image}
+                alt={featuredPost.title}
+                className="w-full h-80 object-cover"
+              />
+            )}
+            <div className="p-6 flex flex-col flex-grow">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">{featuredPost?.title}</h3>
+              <p className="text-gray-700 mb-4 flex-grow">{featuredPost?.excerpt}</p>
+              <Link
+                to={`/voice-of-oak/post/${featuredPost?.id}`}
+                className="mt-auto text-[#3B3D87] font-semibold hover:underline"
+              >
+                Read More
+              </Link>
+            </div>
+          </div>
+          {/* Side List (Right) */}
+          <div className="bg-blue-50 rounded-lg shadow-md p-4 max-h-[500px] overflow-y-auto flex flex-col gap-4">
+            {sidePosts.map((post, idx) => {
+              // Find the index of this post in sortedPosts
+              const postIndex = (currentIndex + idx) % sortedPosts.length;
+              return (
+                <div
+                  key={post.id}
+                  className={`mb-2 p-3 rounded transition-colors ${idx === 0 ? 'bg-blue-300' : 'bg-blue-100'} hover:bg-blue-200`}
+                  onClick={() => setCurrentIndex(postIndex)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <h4 className="font-semibold text-base mb-1">{post.title}</h4>
+                  <p className="text-sm text-gray-700 mb-1 line-clamp-2">{post.excerpt}</p>
+                  <Link to={`/voice-of-oak/post/${post.id}`} className="text-xs text-[#3B3D87] hover:underline" onClick={e => e.stopPropagation()}>
+                    Read More
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 px-4">Top Voices This Month</h2>

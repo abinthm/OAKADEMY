@@ -55,6 +55,8 @@ const Navbar = ({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
           <NavLink to="/about">ABOUT US</NavLink>
+          <NavLink to="/achievements">ACHIEVEMENTS</NavLink>
+          <NavLink to="/testimonials">TESTIMONIALS</NavLink>
           <NavLink href="/voice-of-oak" target="_blank" rel="noopener noreferrer">VOICE OF THE OAK</NavLink>
           <NavLink href="#contact">CONTACT US</NavLink>
           <JoinButton />
@@ -88,6 +90,8 @@ const Navbar = ({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) => {
           `}
         >
           <NavLink to="/about" mobile onMobileClick={() => setMobileMenuOpen(false)}>ABOUT US</NavLink>
+          <NavLink to="/achievements" mobile onMobileClick={() => setMobileMenuOpen(false)}>ACHIEVEMENTS</NavLink>
+          <NavLink to="/testimonials" mobile onMobileClick={() => setMobileMenuOpen(false)}>TESTIMONIALS</NavLink>
           <NavLink href="/voice-of-oak" target="_blank" rel="noopener noreferrer" mobile onMobileClick={() => setMobileMenuOpen(false)}>VOICE OF THE OAK</NavLink>
           <NavLink href="#contact" mobile onMobileClick={() => setMobileMenuOpen(false)}>CONTACT US</NavLink>
           <JoinButton mobile />
