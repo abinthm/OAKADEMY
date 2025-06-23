@@ -81,7 +81,7 @@ const HomePage: React.FC = () => {
     setFilteredPosts(result);
   }, [posts, activeCategory, searchTerm]);
 
-  // Filter posts for the new featured section
+  // Sort posts by date (latest first)
   const sortedPosts = [...posts].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
   // Carousel state for featured post
@@ -101,6 +101,11 @@ const HomePage: React.FC = () => {
   const sidePosts = Array.from({ length: Math.min(5, sortedPosts.length) }, (_, i) =>
     sortedPosts[(currentIndex + i) % sortedPosts.length]
   );
+
+  // Posts to exclude from Top Voices: featured + all side cards actually shown
+  const excludedIds = sidePosts.map(p => p.id);
+  if (featuredPost) excludedIds.push(featuredPost.id);
+  const topVoicesPosts = sortedPosts.filter(post => !excludedIds.includes(post.id));
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -128,9 +133,58 @@ const HomePage: React.FC = () => {
         </Link>
       </div>
 
+      {/* AI & Deepfake Fraud News Section */}
+      <section className="mb-12">
+        <h2 className="text-4xl font-extrabold text-gray-900 text-center mb-2">AI & Deepfake Fraud News</h2>
+        <p className="text-center text-gray-600 mb-8">Stay updated on the latest AI fraud and deepfake misuse cases affecting society.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          {/* Featured Post (Left, spans 2 columns) */}
+          <div className="md:col-span-2 bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
+            {featuredPost && featuredPost.cover_image && (
+              <img
+                src={featuredPost.cover_image}
+                alt={featuredPost.title}
+                className="w-full h-80 object-cover"
+              />
+            )}
+            <div className="p-6 flex flex-col flex-grow">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">{featuredPost?.title}</h3>
+              <p className="text-gray-700 mb-4 flex-grow">{featuredPost?.excerpt}</p>
+              <Link
+                to={`/voice-of-oak/post/${featuredPost?.id}`}
+                className="mt-auto text-[#3B3D87] font-semibold hover:underline"
+              >
+                Read More
+              </Link>
+            </div>
+          </div>
+          {/* Side List (Right) */}
+          <div className="bg-blue-50 rounded-lg shadow-md p-4 max-h-[500px] overflow-y-auto flex flex-col gap-4">
+            {sidePosts.map((post, idx) => {
+              // Find the index of this post in sortedPosts
+              const postIndex = (currentIndex + idx) % sortedPosts.length;
+              return (
+                <div
+                  key={post.id}
+                  className={`mb-2 p-3 rounded transition-colors ${idx === 0 ? 'bg-blue-300' : 'bg-blue-100'} hover:bg-blue-200`}
+                  onClick={() => setCurrentIndex(postIndex)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <h4 className="font-semibold text-base mb-1">{post.title}</h4>
+                  <p className="text-sm text-gray-700 mb-1 line-clamp-2">{post.excerpt}</p>
+                  <Link to={`/voice-of-oak/post/${post.id}`} className="text-xs text-[#3B3D87] hover:underline" onClick={e => e.stopPropagation()}>
+                    Read More
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Top Voices This Month Section */}
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 px-4">Top Voices This Month</h2>
-        
         <div className="border-b border-gray-200 mb-6">
           <nav className="flex space-x-4 md:space-x-8 overflow-x-auto pb-2 px-4" aria-label="Categories">
             <button
@@ -158,7 +212,6 @@ const HomePage: React.FC = () => {
             ))}
           </nav>
         </div>
-
         <div className="relative mb-8 px-4">
           <input
             type="text"
@@ -169,47 +222,46 @@ const HomePage: React.FC = () => {
           />
           <Search className="absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
         </div>
-      </div>
-
-      {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-4">
-          {[1, 2, 3, 4, 5, 6].map((n) => (
-            <div key={n} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
-              <div className="h-48 bg-gray-200" />
-              <div className="p-6">
-                <div className="h-6 bg-gray-200 rounded w-3/4 mb-4" />
-                <div className="h-4 bg-gray-200 rounded w-full mb-2" />
-                <div className="h-4 bg-gray-200 rounded w-2/3" />
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-4">
+            {[1, 2, 3, 4, 5, 6].map((n) => (
+              <div key={n} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+                <div className="h-48 bg-gray-200" />
+                <div className="p-6">
+                  <div className="h-6 bg-gray-200 rounded w-3/4 mb-4" />
+                  <div className="h-4 bg-gray-200 rounded w-full mb-2" />
+                  <div className="h-4 bg-gray-200 rounded w-2/3" />
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : filteredPosts.length === 0 ? (
-        <div className="text-center py-12 px-4">
-          <p className="text-gray-500 text-lg">
-            {searchTerm
-              ? `No stories found for "${searchTerm}"`
-              : 'No stories found in this category'}
-          </p>
-          {searchTerm && (
-            <button
-              onClick={() => setSearchTerm('')}
-              className="mt-4 text-[#3B3D87] hover:text-[#2d2f66]"
-            >
-              Clear search
-            </button>
-          )}
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-4">
-          {filteredPosts.map((post) => (
-            <BlogCard
-            key={post.id}
-            post={post}
-          />
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        ) : topVoicesPosts.length === 0 ? (
+          <div className="text-center py-12 px-4">
+            <p className="text-gray-500 text-lg">
+              {searchTerm
+                ? `No stories found for "${searchTerm}"`
+                : 'No stories found in this category'}
+            </p>
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="mt-4 text-[#3B3D87] hover:text-[#2d2f66]"
+              >
+                Clear search
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-4">
+            {topVoicesPosts.map((post) => (
+              <BlogCard
+                key={post.id}
+                post={post}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
