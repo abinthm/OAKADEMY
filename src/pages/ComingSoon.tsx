@@ -1,6 +1,9 @@
 import React from 'react';
+import usePageTitle from '../hooks/usePageTitle';
 
 const ComingSoon: React.FC = () => {
+  usePageTitle('Coming Soon');
+  
   return (
     <div className="min-h-[100vh] flex items-center justify-center bg-gradient-to-b from-white to-gray-50">
       <div className="text-center px-4">

@@ -6,6 +6,7 @@ import { User } from '../types';
 import BlogCard from '../components/blog/BlogCard';
 import { Link } from 'react-router-dom';
 import { uploadImage } from '../lib/uploadImage';
+import usePageTitle from '../hooks/usePageTitle';
 
 const ProfilePage: React.FC = () => {
   const { user, updateProfile } = useAuthStore();
@@ -21,6 +22,8 @@ const ProfilePage: React.FC = () => {
   const [bio, setBio] = useState(user?.bio || '');
   const [avatar, setAvatar] = useState(user?.avatar || '');
   const [role, setRole] = useState(user?.role || 'Community Contributor');
+  
+  usePageTitle('Profile');
   
   if (!user) {
     return (

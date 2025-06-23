@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -22,35 +23,28 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import AdminRoute from './components/auth/AdminRoute';
 import Footer from './components/Footer';
 import NavbarTwo from './components/layout/NavbarTwo';
-import ComingSoon from './pages/ComingSoon';
+import ContactPage from './pages/ContactPage';
+import AuthCallback from './pages/AuthCallback';
 import VoiceOfOakLayout from './components/layout/VoiceOfOakLayout';
+import ComingSoon from './pages/ComingSoon';
+import NotFound from './pages/NotFound';
 
-const NotFound = () => (
-  <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-[60vh]">
-    <h1 className="text-3xl font-bold text-gray-900 mb-4">Page Not Found</h1>
-    <p className="text-gray-600 mb-8">The page you're looking for doesn't exist or has been moved.</p>
-    <Link
-      to="/"
-      className="px-4 py-2 bg-[#3B3D87] text-white rounded-md hover:bg-[#2d2f66] transition-colors"
-    >
-      Back to Home
-    </Link>
-  </div>
-);
-
-// Create a wrapper component for the routes
 const AppRoutes = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user } = useAuthStore();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const initializeAuth = useAuthStore((state) => state.initializeAuth);
 
-  // Uncomment to show coming soon page
-  // useEffect(() => {
-  //   navigate(`/coming-soon`);
-  // }, []);
+  useEffect(() => {
+    initializeAuth();
+  }, [initializeAuth]);
 
   return (
       <div className="min-h-screen">
+        <Helmet>
+          <title>Oakademy - Online Learning Platform</title>
+          <meta name="description" content="Oakademy is an online learning platform offering a variety of courses and blog content to empower learners and enhance skills." />
+        </Helmet>
       <Routes>
         <Route path="/coming-soon" element={<ComingSoon />} />
         <Route path="/" element={
@@ -78,6 +72,8 @@ const AppRoutes = () => {
             user ? <Navigate to="/voice-of-oak" replace /> : <RegisterPage />
             } />
           <Route path="post/:id" element={<ViewBlogPage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="auth/callback" element={<AuthCallback />} />
             
             {/* Protected Routes */}
           <Route path="write" element={<ProtectedRoute><WriteBlogPage /></ProtectedRoute>} />
@@ -113,18 +109,16 @@ const AppRoutes = () => {
             </main>
           </>
         } />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-      </div>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 };
 
-function App() {
-  return (
-    <Router>
-      <AppRoutes />
-    </Router>
-  );
-}
+const App = () => (
+  <Router>
+    <AppRoutes />
+  </Router>
+);
 
 export default App;

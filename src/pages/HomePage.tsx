@@ -5,6 +5,9 @@ import { useBlogStore } from '../store/blogStore';
 import { useAuthStore } from '../store/authStore';
 import BlogCard from '../components/blog/BlogCard';
 import { Category, BlogPost } from '../types';
+import usePageTitle from '../hooks/usePageTitle';
+import LatestPostsSection from '../components/blog/LatestPostsSection';
+import Testimonials from '../components/Testimonials';
 
 // Shortened category names for tabs
 const categoryTabs = {
@@ -33,6 +36,7 @@ const categories: Category[] = [
 ];
 
 const HomePage: React.FC = () => {
+  usePageTitle('Voice of the Oak');
   const { posts, fetchPosts } = useBlogStore();
   const { user } = useAuthStore();
   const [activeCategory, setActiveCategory] = useState<Category | 'All'>('All');
@@ -52,7 +56,13 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     // Only show approved posts on the homepage
-    let result = posts.filter(post => post.status === 'approved' && post.published);
+    let allApprovedAndPublishedPosts = posts.filter(post => post.status === 'approved' && post.published);
+
+    // Sort by date to consistently identify the "latest"
+    allApprovedAndPublishedPosts.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+    // Exclude the top 3 latest posts which are handled by LatestPostsSection
+    let result = allApprovedAndPublishedPosts.slice(3); // Skip the first 3 latest posts
     
     if (activeCategory !== 'All') {
       result = result.filter(post => post.category === activeCategory);
@@ -117,55 +127,6 @@ const HomePage: React.FC = () => {
           Start Writing - Your Voice Matters
         </Link>
       </div>
-
-      {/* New AI & Deepfake Fraud News Section */}
-      <section className="mb-12">
-        <h2 className="text-4xl font-extrabold text-gray-900 text-center mb-2">AI & Deepfake Fraud News</h2>
-        <p className="text-center text-gray-600 mb-8">Stay updated on the latest AI fraud and deepfake misuse cases affecting society.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-          {/* Featured Post (Left, spans 2 columns) */}
-          <div className="md:col-span-2 bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
-            {featuredPost && featuredPost.cover_image && (
-              <img
-                src={featuredPost.cover_image}
-                alt={featuredPost.title}
-                className="w-full h-80 object-cover"
-              />
-            )}
-            <div className="p-6 flex flex-col flex-grow">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">{featuredPost?.title}</h3>
-              <p className="text-gray-700 mb-4 flex-grow">{featuredPost?.excerpt}</p>
-              <Link
-                to={`/voice-of-oak/post/${featuredPost?.id}`}
-                className="mt-auto text-[#3B3D87] font-semibold hover:underline"
-              >
-                Read More
-              </Link>
-            </div>
-          </div>
-          {/* Side List (Right) */}
-          <div className="bg-blue-50 rounded-lg shadow-md p-4 max-h-[500px] overflow-y-auto flex flex-col gap-4">
-            {sidePosts.map((post, idx) => {
-              // Find the index of this post in sortedPosts
-              const postIndex = (currentIndex + idx) % sortedPosts.length;
-              return (
-                <div
-                  key={post.id}
-                  className={`mb-2 p-3 rounded transition-colors ${idx === 0 ? 'bg-blue-300' : 'bg-blue-100'} hover:bg-blue-200`}
-                  onClick={() => setCurrentIndex(postIndex)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <h4 className="font-semibold text-base mb-1">{post.title}</h4>
-                  <p className="text-sm text-gray-700 mb-1 line-clamp-2">{post.excerpt}</p>
-                  <Link to={`/voice-of-oak/post/${post.id}`} className="text-xs text-[#3B3D87] hover:underline" onClick={e => e.stopPropagation()}>
-                    Read More
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 px-4">Top Voices This Month</h2>

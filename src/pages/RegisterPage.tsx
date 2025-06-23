@@ -1,7 +1,10 @@
 import React from 'react';
 import RegisterForm from '../components/auth/RegisterForm';
+import usePageTitle from '../hooks/usePageTitle';
 
 const RegisterPage: React.FC = () => {
+  usePageTitle('Register');
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
