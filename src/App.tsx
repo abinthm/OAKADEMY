@@ -14,6 +14,8 @@ import ViewBlogPage from './pages/ViewBlogPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminDashboard from './pages/AdminDashboard';
 import PendingPostsPage from './pages/PendingPostsPage';
+import AchievementsPage from './pages/AchievementsPage';
+import TestimonialsPage from './pages/TestimonialsPage';
 
 // Route protection
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -64,6 +66,22 @@ const AppRoutes = () => {
             <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
         <main className={`transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-30' : 'opacity-100'}`}>
               <About />
+            </main>
+          </>
+        } />
+        <Route path="/achievements" element={
+          <>
+            <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+            <main className={`transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-30' : 'opacity-100'}`}>
+              <AchievementsPage />
+            </main>
+          </>
+        } />
+        <Route path="/testimonials" element={
+          <>
+            <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+            <main className={`transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-30' : 'opacity-100'}`}>
+              <TestimonialsPage />
             </main>
           </>
         } />
