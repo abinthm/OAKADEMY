@@ -4,6 +4,7 @@ import { Search } from 'lucide-react';
 import { useBlogStore } from '../store/blogStore';
 import { useAuthStore } from '../store/authStore';
 import BlogCard from '../components/blog/BlogCard';
+import FeaturedNewsSection from '../components/blog/FeaturedNewsSection';
 import { Category, BlogPost } from '../types';
 
 // Shortened category names for tabs
@@ -71,6 +72,9 @@ const HomePage: React.FC = () => {
     setFilteredPosts(result);
   }, [posts, activeCategory, searchTerm]);
 
+  // Get approved and published posts
+  const approvedPosts = posts.filter(post => post.status === 'approved' && post.published);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col items-center justify-center max-w-4xl mx-auto mb-16 px-4">
@@ -96,6 +100,11 @@ const HomePage: React.FC = () => {
           Start Writing - Your Voice Matters
         </Link>
       </div>
+
+      {/* Featured News Section */}
+      {!isLoading && approvedPosts.length > 0 && (
+        <FeaturedNewsSection posts={approvedPosts} />
+      )}
 
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 px-4">Top Voices This Month</h2>
