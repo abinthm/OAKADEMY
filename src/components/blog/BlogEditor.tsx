@@ -227,7 +227,6 @@ const BlogEditor: React.FC<BlogEditorProps> = ({ postId, isDraft = false }) => {
             navigate(`/post/${postData.id}`);
           }, 2000);
         }
-        return;
       }
       
       setSaved(true);

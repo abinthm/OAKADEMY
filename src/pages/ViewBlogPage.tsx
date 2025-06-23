@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useBlogStore } from '../store/blogStore';
 import { useAuthStore } from '../store/authStore';
 import BlogDetail from '../components/blog/BlogDetail';
 import { User } from '../types';
+import usePageTitle from '../hooks/usePageTitle';
 
 const ViewBlogPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +18,8 @@ const ViewBlogPage: React.FC = () => {
     setLoading(true);
     setTimeout(() => setLoading(false), 500); // Simulate loading
   }, [id]);
+  
+  usePageTitle(id ? getPostById(id)?.title || 'Blog Post' : 'Blog Post');
   
   if (loading) {
     return (
@@ -73,8 +77,15 @@ const ViewBlogPage: React.FC = () => {
     bio: 'Community Contributor'  // Default bio
   };
   
+  // Generate meta description from post content, truncate if too long
+  const metaDescription = post.content ? post.content.substring(0, 150) + (post.content.length > 150 ? '...' : '') : `Read "${post.title}" on Oakademy's blog.`;
+
   return (
     <div className="container mx-auto px-4 py-8">
+      <Helmet>
+        <title>{post.title} - Oakademy Blog</title>
+        <meta name="description" content={metaDescription} />
+      </Helmet>
       {post.status === 'pending' && (
         <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
           <p className="text-yellow-800">

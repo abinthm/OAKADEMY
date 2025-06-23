@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useBlogStore } from '../store/blogStore';
 import BlogEditor from '../components/blog/BlogEditor';
+import usePageTitle from '../hooks/usePageTitle';
 
 const WriteBlogPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -9,6 +10,8 @@ const WriteBlogPage: React.FC = () => {
   
   const post = id ? getPostById(id) : undefined;
   const isDraft = post ? !post.published : false;
+  
+  usePageTitle(id ? 'Edit Post' : 'Write Post');
   
   return (
     <div className="container mx-auto px-4 py-8">
