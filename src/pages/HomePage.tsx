@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { useBlogStore } from '../store/blogStore';
@@ -102,10 +102,13 @@ const HomePage: React.FC = () => {
     sortedPosts[(currentIndex + i) % sortedPosts.length]
   );
 
-  // Posts to exclude from Top Voices: featured + all side cards actually shown
-  const excludedIds = sidePosts.map(p => p.id);
-  if (featuredPost) excludedIds.push(featuredPost.id);
-  const topVoicesPosts = sortedPosts.filter(post => !excludedIds.includes(post.id));
+  // Exclude posts shown in featured/side cards from Top Voices, but only if there are enough posts
+  const topVoicesPosts = useMemo(() => {
+    if (sortedPosts.length <= 6) return sortedPosts;
+    const excludedIds = sidePosts.map(p => p.id);
+    if (featuredPost) excludedIds.push(featuredPost.id);
+    return sortedPosts.filter(post => !excludedIds.includes(post.id));
+  }, [sortedPosts, featuredPost, sidePosts]);
 
   return (
     <div className="container mx-auto px-4 py-8">
