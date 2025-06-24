@@ -22,7 +22,6 @@ const LoginForm: React.FC = () => {
     
     try {
       await login(data.email, data.password);
-      navigate('/voice-of-oak');
     } catch (err) {
       setError((err as Error).message || 'Failed to log in. Please try again.');
     } finally {
@@ -34,8 +33,7 @@ const LoginForm: React.FC = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
-      if (error) throw error;
+      await loginWithGoogle();
     } catch (err) {
       setError((err as Error).message || 'Failed to sign in with Google.');
     } finally {
