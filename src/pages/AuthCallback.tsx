@@ -31,17 +31,6 @@ const AuthCallback: React.FC = () => {
 
     authSubscription.current = data?.subscription;
 
-    // Initial check (in case onAuthStateChange doesn't fire immediately on first load)
-    const checkInitialSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        console.log('Initial session found via getSession, navigating to /voice-of-oak');
-        navigate('/voice-of-oak', { replace: true });
-      }
-    };
-
-    checkInitialSession();
-
     return () => {
       if (authSubscription.current) {
         authSubscription.current.unsubscribe();
