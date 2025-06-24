@@ -60,13 +60,7 @@ const Home = () => {
           </svg>
         </div>
         <div className="container mx-auto max-w-2xl px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 1, ease: 'easeOut' }}
-            className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 relative border-l-8 border-[#3B3D87]"
-          >
+          <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 relative border-l-8 border-[#3B3D87]">
             <div className="flex justify-center mb-4">
               <svg className="w-10 h-10 text-[#3B3D87] opacity-30" fill="currentColor" viewBox="0 0 24 24"><path d="M7.17 15.59C7.06 15.86 7 16.17 7 16.5A2.5 2.5 0 0 0 9.5 19c1.38 0 2.5-1.12 2.5-2.5 0-1.38-1.12-2.5-2.5-2.5-.34 0-.65.06-.92.17C8.7 11.7 10.5 9.5 13 9.5V7c-3.87 0-7 3.13-7 7 0 .21.01.42.03.62.09.01.18.02.27.02.32 0 .63-.06.9-.17zm9 0c-.11.27-.17.58-.17.91A2.5 2.5 0 0 0 18.5 19c1.38 0 2.5-1.12 2.5-2.5 0-1.38-1.12-2.5-2.5-2.5-.34 0-.65.06-.92.17C17.7 11.7 19.5 9.5 22 9.5V7c-3.87 0-7 3.13-7 7 0 .21.01.42.03.62.09.01.18.02.27.02.32 0 .63-.06.9-.17z"/></svg>
             </div>
@@ -89,7 +83,7 @@ const Home = () => {
               <p className="font-semibold text-[#3B3D87] italic" style={{ fontFamily: 'Dancing Script, cursive', fontSize: '2rem', lineHeight: '2.5rem' }}>Gautham Krishnan B</p>
               <p className="text-gray-700 italic">Founder, Oakademy</p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
       <ContactUs />
