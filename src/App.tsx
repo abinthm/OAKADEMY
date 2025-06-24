@@ -24,6 +24,7 @@ import Footer from './components/Footer';
 import NavbarTwo from './components/layout/NavbarTwo';
 import ComingSoon from './pages/ComingSoon';
 import VoiceOfOakLayout from './components/layout/VoiceOfOakLayout';
+import AuthCallback from './pages/AuthCallback';
 
 const NotFound = () => (
   <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-[60vh]">
@@ -85,6 +86,7 @@ const AppRoutes = () => {
             </main>
           </>
         } />
+        <Route path="/voice-of-oak/auth/callback" element={<AuthCallback />} />
         <Route path="/voice-of-oak" element={<VoiceOfOakLayout />}>
           <Route index element={<HomePage />} />
           <Route path="login" element={
