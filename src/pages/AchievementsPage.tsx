@@ -53,7 +53,7 @@ const AchievementsPage = () => {
       {/* Hero Section */}
       <div className="bg-[#3B3D87] text-white py-20">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+          <h1 className="font-['Poppins'] font-extrabold text-5xl md:text-6xl lg:text-7xl mb-8 text-white">
             Our Achievements
           </h1>
           <p className="text-xl text-white/80 max-w-2xl">
