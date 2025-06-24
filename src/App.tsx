@@ -43,7 +43,12 @@ const NotFound = () => (
 const AppRoutes = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user } = useAuthStore();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const initializeAuth = useAuthStore((state) => state.initializeAuth);
+
+  useEffect(() => {
+    initializeAuth();
+  }, [initializeAuth]);
 
   // Uncomment to show coming soon page
   // useEffect(() => {
