@@ -10,6 +10,7 @@ import b6 from '../assets/b6.png';
 import b7 from '../assets/b7.png';
 import b8 from '../assets/b8.png';
 import b9 from '../assets/b9.png';
+import ContactUs from '../components/ContactUs';
 
 const trustedLogos = [b1, b2, b3, b4, b5, b6, b7, b8, b9];
 
@@ -109,7 +110,7 @@ const TestimonialsPage = () => {
       {/* Trusted by Section */}
       <div className="bg-gray-50 py-12">
         <div className="container mx-auto px-4 text-center">
-          <h3 className="text-lg md:text-xl font-semibold text-gray-600 mb-8">
+          <h3 className="font-['Poppins'] text-lg md:text-xl font-semibold text-gray-600 mb-8">
             Trusted by leading organizations worldwide
           </h3>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 lg:gap-16">
@@ -125,6 +126,7 @@ const TestimonialsPage = () => {
           </div>
         </div>
       </div>
+      <ContactUs />
     </motion.div>
   );
 };

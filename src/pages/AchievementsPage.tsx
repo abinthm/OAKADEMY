@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Award, Users, Globe2, BookOpen, Target, Lightbulb } from 'lucide-react';
+import ContactUs from '../components/ContactUs';
 
 const AchievementsPage = () => {
   const achievements = [
@@ -89,6 +90,7 @@ const AchievementsPage = () => {
           ))}
         </div>
       </div>
+      <ContactUs />
     </motion.div>
   );
 };

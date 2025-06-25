@@ -176,9 +176,12 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featuredPostId }) => {
         {!featuredPostId && (
           <button 
             onClick={() => navigate(`/voice-of-oak/post/${post.id}`)}
-            className="mt-auto px-6 py-3 bg-[#3B3D87] text-white rounded-lg hover:bg-[#2d2f66] transition-colors self-start"
+            className="mt-4 px-6 py-3 bg-gradient-to-r from-[#3B3D87] to-[#5f5fc4] text-white rounded-full shadow-lg font-semibold text-base flex items-center gap-2 transition-all duration-200 hover:from-[#2d2f66] hover:to-[#4b4b8f] hover:scale-105 focus:outline-none"
           >
             Read More
+            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
           </button>
         )}
       </div>

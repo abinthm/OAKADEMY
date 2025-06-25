@@ -64,7 +64,7 @@ const Testimonials: React.FC = () => {
       </div>
       {/* Trusted by logos section */}
       <div className="mt-12">
-        <p className="text-center text-sm text-gray-500 mb-6">Trusted by leading organizations worldwide</p>
+        <p className="font-['Poppins'] text-center text-sm text-gray-500 mb-6">Trusted by leading organizations worldwide</p>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-6 items-center justify-items-center max-w-4xl mx-auto">
           {[b1, b2, b3, b4, b5, b6, b7, b8, b9].map((img, idx) => (
             <img key={idx} src={img} alt={`Trusted logo ${idx + 1}`} className="h-16 object-contain grayscale hover:grayscale-0 transition duration-300" />
