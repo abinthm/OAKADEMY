@@ -31,7 +31,7 @@ const Home = () => {
       {/* Trusted by Section */}
       <div className="bg-gray-50 py-12">
         <div className="container mx-auto px-4 text-center">
-          <h3 className="font-['Poppins'] text-lg md:text-xl font-semibold text-gray-600 mb-8">
+          <h3 className="font-['Poppins'] text-lg md:text-xl font-semibold text-gray-600 mb-12">
             Trusted by leading organizations worldwide
           </h3>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 lg:gap-16">
