@@ -34,11 +34,6 @@ const AchievementsPage = () => {
       description: 'Oakademy is currently incubated under the Innovation & Entrepreneurship Development Centre (IEDC), Sacred Heart College (Autonomous), fostering early-stage innovation and sustainable scaling.',
       year: '2024',
     },
-    {
-      title: 'Global Social Impact Award – GEB Paris (Nominee)',
-      description: 'Nominated for the prestigious Global Social Impact Award by the Global Entrepreneurship Bootcamp (GEB), Paris, recognizing Oakademy\'s grassroots innovation in rural AI education.',
-      year: '2024',
-    },
   ];
 
   return (
