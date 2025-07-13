@@ -10,11 +10,6 @@ const AchievementsPage = () => {
       year: '2025',
     },
     {
-      title: 'Harvard x HPAIR Selection',
-      description: 'Officially selected as a delegate for the Harvard Project for Asian and International Relations (HPAIR) 2024 Conference, held at Chulalongkorn University, Thailand — spotlighting Oakademy\'s mission on an Ivy League platform.',
-      year: '2024',
-    },
-    {
       title: 'World Bank Youth Summit Invitee',
       description: 'Selected to attend the World Bank Group\'s Youth Summit 2025: New Horizons – Youth-led Innovation for a Livable Planet, showcasing youth-driven, climate-aligned tech solutions.',
       year: '2025',
@@ -28,6 +23,11 @@ const AchievementsPage = () => {
       title: 'Global Footprint in 10+ Nations',
       description: 'Established connections with ambassadors, supporters, and collaborators across 10+ countries* — expanding Oakademy\'s vision of inclusive digital education beyond borders. *Estimate based on informal engagement and early-stage outreach data.',
       year: '2025',
+    },
+    {
+      title: 'Harvard x HPAIR Selection',
+      description: 'Officially selected as a delegate for the Harvard Project for Asian and International Relations (HPAIR) 2024 Conference, held at Chulalongkorn University, Thailand — spotlighting Oakademy\'s mission on an Ivy League platform.',
+      year: '2024',
     },
     {
       title: 'Startup Incubation at IEDC',
@@ -75,7 +75,7 @@ const AchievementsPage = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-2 font-['Poppins']">
                 {achievement.title}
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 mb-4 text-justify">
                 {achievement.description}
               </p>
               <div className="text-sm text-[#3B3D87] font-medium">
