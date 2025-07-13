@@ -20,8 +20,8 @@ const AchievementsPage = () => {
       year: '2025',
     },
     {
-      title: 'Global Footprint in 10+ Nations',
-      description: 'Established connections with ambassadors, supporters, and collaborators across 10+ countries* — expanding Oakademy\'s vision of inclusive digital education beyond borders. *Estimate based on informal engagement and early-stage outreach data.',
+      title: 'Global Social Impact Award – GEB Paris (Nominee)',
+      description: 'Nominated for the prestigious Global Social Impact Award by the Global Entrepreneurship Bootcamp (GEB), Paris, recognizing Oakademy’s grassroots innovation in rural AI education.',
       year: '2025',
     },
     {
@@ -70,7 +70,7 @@ const AchievementsPage = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-2 font-['Poppins']">
                 {achievement.title}
               </h3>
-              <p className="text-gray-600 mb-4 text-justify">
+              <p className="text-gray-600 mb-4">
                 {achievement.description}
               </p>
               <div className="text-sm text-[#3B3D87] font-medium">
