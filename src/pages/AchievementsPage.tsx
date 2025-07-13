@@ -1,46 +1,44 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, Users, Globe2, BookOpen, Target, Lightbulb } from 'lucide-react';
 import ContactUs from '../components/ContactUs';
 
 const AchievementsPage = () => {
   const achievements = [
     {
-      icon: <Award className="w-8 h-8" />,
-      title: "Global Recognition",
-      description: "Recognized by UNESCO for innovative rural AI education initiatives",
-      year: "2023"
+      title: 'beVisioneers Mercedes-Benz Fellowship',
+      description: 'Selected for the beVisioneers Fellowship – a global program by Mercedes-Benz empowering sustainability pioneers. Part of Cohort 3, representing inclusive AI education for underserved communities.',
+      year: '2025',
     },
     {
-      icon: <Users className="w-8 h-8" />,
-      title: "Community Impact",
-      description: "Successfully trained over 1,000 rural youth in AI fundamentals",
-      year: "2023"
+      title: 'Harvard x HPAIR Selection',
+      description: 'Officially selected as a delegate for the Harvard Project for Asian and International Relations (HPAIR) 2024 Conference, held at Chulalongkorn University, Thailand — spotlighting Oakademy\'s mission on an Ivy League platform.',
+      year: '2024',
     },
     {
-      icon: <Globe2 className="w-8 h-8" />,
-      title: "International Reach",
-      description: "Expanded to 10+ countries with active local chapters",
-      year: "2023"
+      title: 'World Bank Youth Summit Invitee',
+      description: 'Selected to attend the World Bank Group\'s Youth Summit 2025: New Horizons – Youth-led Innovation for a Livable Planet, showcasing youth-driven, climate-aligned tech solutions.',
+      year: '2025',
     },
     {
-      icon: <BookOpen className="w-8 h-8" />,
-      title: "Educational Excellence",
-      description: "Developed comprehensive AI curriculum tailored for rural contexts",
-      year: "2023"
+      title: 'Millennium Fellowship Finalist',
+      description: 'Advanced to the final selection round of the Millennium Fellowship by United Nations Academic Impact and MCN, recognizing student-led social impact initiatives in higher education.',
+      year: '2025',
     },
     {
-      icon: <Target className="w-8 h-8" />,
-      title: "Project Success",
-      description: "Launched 25+ community-driven AI projects addressing local challenges",
-      year: "2023"
+      title: 'Global Footprint in 10+ Nations',
+      description: 'Established connections with ambassadors, supporters, and collaborators across 10+ countries* — expanding Oakademy\'s vision of inclusive digital education beyond borders. *Estimate based on informal engagement and early-stage outreach data.',
+      year: '2025',
     },
     {
-      icon: <Lightbulb className="w-8 h-8" />,
-      title: "Innovation Leadership",
-      description: "Pioneered low-resource AI teaching methodologies",
-      year: "2023"
-    }
+      title: 'Startup Incubation at IEDC',
+      description: 'Oakademy is currently incubated under the Innovation & Entrepreneurship Development Centre (IEDC), Sacred Heart College (Autonomous), fostering early-stage innovation and sustainable scaling.',
+      year: '2024',
+    },
+    {
+      title: 'Global Social Impact Award – GEB Paris (Nominee)',
+      description: 'Nominated for the prestigious Global Social Impact Award by the Global Entrepreneurship Bootcamp (GEB), Paris, recognizing Oakademy\'s grassroots innovation in rural AI education.',
+      year: '2024',
+    },
   ];
 
   return (
@@ -74,10 +72,7 @@ const AchievementsPage = () => {
               transition={{ duration: 0.4, delay: index * 0.1 }}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
             >
-              <div className="w-16 h-16 bg-[#3B3D87]/10 rounded-full flex items-center justify-center mb-4">
-                <div className="text-[#3B3D87]">{achievement.icon}</div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">
+              <h3 className="text-xl font-bold text-gray-900 mb-2 font-['Poppins']">
                 {achievement.title}
               </h3>
               <p className="text-gray-600 mb-4">
