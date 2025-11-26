@@ -53,6 +53,11 @@ const NewsManagement: React.FC = () => {
       return;
     }
 
+    if (!user?.id) {
+      setFormError('User not authenticated. Please refresh the page.');
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       // Upload image
@@ -64,7 +69,7 @@ const NewsManagement: React.FC = () => {
         excerpt: formData.excerpt.trim(),
         link: formData.link.trim(),
         image_url: imageUrl,
-        created_by: user?.id || '',
+        created_by: user.id,
       });
 
       // Reset form

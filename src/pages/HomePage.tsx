@@ -107,9 +107,7 @@ const HomePage: React.FC = () => {
         </div>
 
         {/* Featured News Section */}
-        {!isLoading && approvedPosts.length > 0 && (
-          <FeaturedNewsSection posts={approvedPosts} />
-        )}
+        <FeaturedNewsSection />
 
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 px-4">Top Voices This Month</h2>

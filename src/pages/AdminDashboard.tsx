@@ -12,7 +12,7 @@ const AdminDashboard: React.FC = () => {
   usePageTitle('Admin Dashboard');
 
   const navigate = useNavigate();
-  const { user } = useAuthStore();
+  const { user, refreshUser } = useAuthStore();
   const { getPendingPosts, approvePost, rejectPost, fetchPosts } = useBlogStore();
   const [reviewNotes, setReviewNotes] = useState<string>('');
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
@@ -21,7 +21,6 @@ const AdminDashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
-  // First, check authentication and admin status
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -36,7 +35,7 @@ const AdminDashboard: React.FC = () => {
 
         const { data: profile, error: profileError } = await supabase
           .from('profiles')
-          .select('is_admin')
+          .select('*')
           .eq('id', session.user.id)
           .single();
 
@@ -44,6 +43,9 @@ const AdminDashboard: React.FC = () => {
           navigate('/voice-of-oak', { replace: true });
           return;
         }
+
+        // Update auth store with admin status
+        await refreshUser();
 
         setIsCheckingAuth(false);
       } catch (err) {
@@ -53,7 +55,7 @@ const AdminDashboard: React.FC = () => {
     };
 
     checkAuth();
-  }, [navigate]);
+  }, [navigate, user, refreshUser]);
 
   // Then, load posts once auth is confirmed and set up auto-refresh
   useEffect(() => {

@@ -22,9 +22,13 @@ const LoginForm: React.FC = () => {
     
     try {
       await login(data.email, data.password);
+      // Wait a bit for auth state to update, then navigate
+      setTimeout(() => {
+        console.log('LoginForm: Navigating after successful login');
+        navigate('/voice-of-oak', { replace: true });
+      }, 500);
     } catch (err) {
       setError((err as Error).message || 'Failed to log in. Please try again.');
-    } finally {
       setIsLoading(false);
     }
   };

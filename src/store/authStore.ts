@@ -12,6 +12,7 @@ interface AuthState {
   loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (userData: Partial<User>) => Promise<User>;
+  refreshUser: () => Promise<void>;
 }
 
 // Helper function to fetch or create user profile
@@ -82,13 +83,16 @@ export const useAuthStore = create<AuthState>()(
 
       initializeAuth: () => {
         console.log('AuthStore: Initializing auth listener.');
+        console.log('AuthStore: Current origin:', window.location.origin);
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
           console.log('AuthStore Listener: Auth state changed:', event, session);
+          console.log('AuthStore Listener: Current location:', window.location.href);
           if (session) {
             try {
               const user = await fetchOrCreateProfile(session.user);
               set({ user, isAuthenticated: true });
               console.log('AuthStore Listener: User state set based on session.', user);
+              console.log('AuthStore Listener: User isAdmin:', user.isAdmin);
             } catch (error) {
               console.error('AuthStore Listener: Error processing session user:', error);
               set({ user: null, isAuthenticated: false });
@@ -153,10 +157,19 @@ export const useAuthStore = create<AuthState>()(
 
       loginWithGoogle: async () => {
         console.log('AuthStore: Initiating Google login...');
+        // Ensure we use localhost for local development
+        const origin = window.location.origin;
+        const redirectUrl = `${origin}/voice-of-oak/auth/callback`;
+        console.log('AuthStore: Using redirect URL:', redirectUrl);
+        
         const { error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
-            redirectTo: `${window.location.origin}/voice-of-oak/auth/callback`
+            redirectTo: redirectUrl,
+            queryParams: {
+              // Force localhost redirect
+              redirect_to: redirectUrl
+            }
           }
         });
 
@@ -248,6 +261,27 @@ export const useAuthStore = create<AuthState>()(
         } catch (error) {
           console.error('AuthStore: Profile update failed:', error);
           throw error;
+        }
+      },
+
+      refreshUser: async () => {
+        const { user: currentUser } = get();
+        if (!currentUser) {
+          return;
+        }
+
+        try {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (!session) {
+            set({ user: null, isAuthenticated: false });
+            return;
+          }
+
+          const user = await fetchOrCreateProfile(session.user);
+          set({ user, isAuthenticated: true });
+          console.log('AuthStore: User refreshed:', user);
+        } catch (error) {
+          console.error('AuthStore: Error refreshing user:', error);
         }
       },
     }),
