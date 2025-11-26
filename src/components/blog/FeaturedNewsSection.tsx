@@ -1,68 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ai1 from '../../assets/b1.png';
-import ai2 from '../../assets/b2.png';
-import ai3 from '../../assets/b3.png';
-
-const newsItems = [
-  {
-    id: 1,
-    title: 'Deepfake Scam Targets Global Bank',
-    excerpt: 'A major international bank lost $25 million after scammers used AI-generated deepfake audio to impersonate a senior executive.',
-    image: ai1,
-    link: 'https://www.bbc.com/news/technology-56376016',
-  },
-  {
-    id: 2,
-    title: 'AI-Generated News Goes Viral',
-    excerpt: 'A fake news story created by an AI system spread rapidly on social media, raising concerns about misinformation and digital trust.',
-    image: ai2,
-    link: 'https://www.nytimes.com/2023/07/10/technology/ai-fake-news.html',
-  },
-  {
-    id: 3,
-    title: 'Celebrity Deepfakes Spark Outrage',
-    excerpt: 'Deepfake videos featuring celebrities in fabricated scenarios have gone viral, prompting calls for stricter AI regulations.',
-    image: ai3,
-    link: 'https://www.cnn.com/2023/05/15/tech/deepfake-celebrity-videos/index.html',
-  },
-  {
-    id: 4,
-    title: 'AI in Elections: Deepfake Threats',
-    excerpt: 'Upcoming elections face new threats as deepfake videos are used to spread misinformation and sway public opinion.',
-    image: ai2,
-    link: 'https://www.reuters.com/technology/ai-election-deepfakes-2024-01-10/',
-  },
-  {
-    id: 5,
-    title: 'Synthetic Media and Social Trust',
-    excerpt: 'Experts warn that synthetic media could erode public trust in online content, urging for new verification tools.',
-    image: ai1,
-    link: 'https://www.theverge.com/2023/03/22/synthetic-media-trust-ai',
-  },
-  {
-    id: 5,
-    title: 'Synthetic Media and Social Trust',
-    excerpt: 'Experts warn that synthetic media could erode public trust in online content, urging for new verification tools.',
-    image: ai1,
-    link: 'https://www.theverge.com/2023/03/22/synthetic-media-trust-ai',
-  },
-];
-  
-
+import { useNewsStore } from '../../store/newsStore';
 
 const FeaturedNewsSection: React.FC = () => {
+  const { newsItems, fetchNewsItems, isLoading } = useNewsStore();
   const [featuredIndex, setFeaturedIndex] = useState(0);
-  const featuredNews = newsItems[featuredIndex];
   const featuredRef = useRef<HTMLAnchorElement>(null);
   const [sideHeight, setSideHeight] = useState<number | undefined>(undefined);
 
+  // Fetch news items on mount
+  useEffect(() => {
+    fetchNewsItems();
+  }, [fetchNewsItems]);
+
   // Auto-shuffle featured news every 10 seconds
   useEffect(() => {
+    if (newsItems.length === 0) return;
+    
     const interval = setInterval(() => {
       setFeaturedIndex((current) => (current + 1) % newsItems.length);
     }, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [newsItems.length]);
 
   // Sync sidebar height to featured post
   useEffect(() => {
@@ -74,15 +32,50 @@ const FeaturedNewsSection: React.FC = () => {
     updateHeight();
     window.addEventListener('resize', updateHeight);
     return () => window.removeEventListener('resize', updateHeight);
-  }, [featuredIndex]);
+  }, [featuredIndex, newsItems.length]);
+
+  // Don't render if loading or no news items
+  if (isLoading && newsItems.length === 0) {
+    return (
+      <div className="mb-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+          The Oak Observer
+        </h2>
+        <p className="text-gray-600 text-center mb-8">
+          Curated stories shaping the world we're building - from tech to youth impact.
+        </p>
+        <div className="text-center py-8">
+          <div className="animate-pulse text-gray-500">Loading news...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (newsItems.length === 0) {
+    return (
+      <div className="mb-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+          The Oak Observer
+        </h2>
+        <p className="text-gray-600 text-center mb-8">
+          Curated stories shaping the world we're building - from tech to youth impact.
+        </p>
+        <div className="text-center py-8 text-gray-500">
+          No news items available at the moment.
+        </div>
+      </div>
+    );
+  }
+
+  const featuredNews = newsItems[featuredIndex];
 
   return (
     <div className="mb-16">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-        AI & Deepfake Fraud News
+        The Oak Observer
       </h2>
       <p className="text-gray-600 text-center mb-8">
-        Stay updated on the latest AI fraud and deepfake misuse cases affecting society.
+        Curated stories shaping the world we're building - from tech to youth impact.
       </p>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Featured News - Takes up 2 columns */}
@@ -96,9 +89,12 @@ const FeaturedNewsSection: React.FC = () => {
           >
             <div className="relative h-[400px] md:h-[480px] lg:h-[520px]">
               <img
-                src={featuredNews.image}
+                src={featuredNews.image_url}
                 alt={featuredNews.title}
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/800x400?text=Image+Not+Found';
+                }}
               />
             </div>
             <div className="p-6">
@@ -133,9 +129,12 @@ const FeaturedNewsSection: React.FC = () => {
                 <div className="flex gap-4">
                   <div className="w-24 h-24 flex-shrink-0">
                     <img
-                      src={news.image}
+                      src={news.image_url}
                       alt={news.title}
                       className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://via.placeholder.com/100x100?text=Image';
+                      }}
                     />
                   </div>
                   <div className="p-4 flex-grow">

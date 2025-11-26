@@ -6,6 +6,7 @@ import { useAuthStore } from '../store/authStore';
 import { supabase } from '../lib/supabaseClient';
 import { BlogPost } from '../types';
 import usePageTitle from '../hooks/usePageTitle';
+import NewsManagement from '../components/admin/NewsManagement';
 
 const AdminDashboard: React.FC = () => {
   usePageTitle('Admin Dashboard');
@@ -307,6 +308,11 @@ const AdminDashboard: React.FC = () => {
             </div>
           )}
         </div>
+      </div>
+
+      {/* News Management Section */}
+      <div className="mt-8">
+        <NewsManagement />
       </div>
 
       {/* Rejection Modal */}

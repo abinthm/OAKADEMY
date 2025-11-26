@@ -107,6 +107,38 @@ export interface Database {
           hashtag?: string
         }
       }
+      news_items: {
+        Row: {
+          id: string
+          title: string
+          excerpt: string
+          image_url: string
+          link: string
+          created_at: string
+          updated_at: string
+          created_by: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          excerpt: string
+          image_url: string
+          link: string
+          created_at?: string
+          updated_at?: string
+          created_by: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          excerpt?: string
+          image_url?: string
+          link?: string
+          created_at?: string
+          updated_at?: string
+          created_by?: string
+        }
+      }
     }
   }
 }
